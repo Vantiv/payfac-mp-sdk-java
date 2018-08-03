@@ -45,7 +45,6 @@ public class Configuration {
         } catch (FileNotFoundException e) {
             throw new PayFacException("Configuration file not found." +
                     " If you are not using the .payfac_SDK_config.properties file," +
-                    " please use the " + ChargebackRetrieval.class.getSimpleName() + "(Properties) constructor." +
                     " If you are using .payfac_SDK_config.properties, you can generate one using java -jar payfac-mp-sdk-java-x.xx.jar", e);
         } catch (IOException e) {
             throw new PayFacException("Configuration file could not be loaded.  Check to see if the user running this has permission to access the file", e);

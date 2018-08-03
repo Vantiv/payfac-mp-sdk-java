@@ -1,5 +1,6 @@
 package com.mp.sdk;
 
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -9,6 +10,7 @@ public class XMLConverters {
     public static ApprovedMccResponse generateMccResponse(String xmlResponse) {
 
         return (ApprovedMccResponse) responseUnmarshaller(xmlResponse);
+
     }
 
     public static LegalEntityAgreementCreateResponse generateAgreementCreateResponse(String xmlResponse) {
@@ -27,19 +29,20 @@ public class XMLConverters {
         return (LegalEntityCreateResponse) responseUnmarshaller(xmlResponse);
     }
 
-    public static LegalEntityPrincipalCreateResponse generateLegalEntityPrincipalCreateResponse(String xmlResponse) {
-
-        return (LegalEntityPrincipalCreateResponse) responseUnmarshaller(xmlResponse);
-    }
-
-    public static LegalEntityPrincipalDeleteResponse generateLegalEntityPrincipalDeleteResponse(String xmlResponse) {
-
-        return (LegalEntityPrincipalDeleteResponse) responseUnmarshaller(xmlResponse);
-    }
+//    public static LegalEntityPrincipalCreateResponse generateLegalEntityPrincipalCreateResponse(String xmlResponse) {
+//
+//        return (LegalEntityPrincipalCreateResponse) responseUnmarshaller(xmlResponse);
+//    }
+//
+//    public static LegalEntityPrincipalDeleteResponse generateLegalEntityPrincipalDeleteResponse(String xmlResponse) {
+//
+//        return (LegalEntityPrincipalDeleteResponse) responseUnmarshaller(xmlResponse);
+//    }
 
     public static LegalEntityResponse generateLegalEntityResponse(String xmlResponse) {
 
-        return (LegalEntityResponse) responseUnmarshaller(xmlResponse);
+        Object response = responseUnmarshaller(xmlResponse);
+        return (LegalEntityResponse) response;
     }
 
     public static LegalEntityRetrievalResponse generateRetrievalResponse(String xmlResponse) {
@@ -107,7 +110,7 @@ public class XMLConverters {
         return requestMarshaller(request);
     }
 
-    private static String requestMarshaller(Object request) {
+    public static String requestMarshaller(Object request) {
         StringWriter sw = new StringWriter();
 
         try {
@@ -120,7 +123,7 @@ public class XMLConverters {
         return sw.toString();
     }
 
-    private static Object responseUnmarshaller(String xml) {
+    public static Object responseUnmarshaller(String xml) {
 
         Object response;
 
@@ -129,6 +132,11 @@ public class XMLConverters {
         }
         catch (JAXBException ex) {
             throw new PayFacException("Error validating xml data against the schema", ex);
+        }
+
+
+        if(response instanceof JAXBElement){
+            return  ((JAXBElement) response).getValue();
         }
 
         return response;

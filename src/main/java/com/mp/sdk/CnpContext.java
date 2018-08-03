@@ -19,7 +19,7 @@ public class CnpContext {
 
     private static JAXBContext initJAXBContext() {
         try {
-            return JAXBContext.newInstance("com.cnp.sdk.generate");
+            return JAXBContext.newInstance("com.mp.sdk");
         } catch (JAXBException e) {
             throw new PayFacException("Unable to load jaxb dependencies.  Perhaps a classpath issue?", e);
         }

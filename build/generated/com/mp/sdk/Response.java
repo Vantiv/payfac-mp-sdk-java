@@ -8,12 +8,7 @@
 
 package com.mp.sdk;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
@@ -40,15 +35,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "response", propOrder = {
     "transactionId"
 })
-@XmlSeeAlso({
-    LegalEntityAgreementCreateResponse.class,
-    LegalEntityPrincipalCreateResponse.class,
-    LegalEntityResponse.class,
-    ApprovedMccResponse.class,
-    ErrorResponse.class,
-    LegalEntityPrincipalDeleteResponse.class,
-    SubMerchantCreateResponse.class
-})
+@XmlRootElement(name = "response")
 public class Response {
 
     @XmlElement(type = String.class)
