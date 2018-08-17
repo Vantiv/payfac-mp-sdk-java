@@ -8,6 +8,24 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.security.Principal;
+
+import com.mp.sdk.ApprovedMccResponse;
+import com.mp.sdk.ErrorResponse;
+import com.mp.sdk.LegalEntityAgreement;
+import com.mp.sdk.LegalEntityAgreementCreateRequest;
+import com.mp.sdk.LegalEntityAgreementCreateResponse;
+import com.mp.sdk.LegalEntityCreateResponse;
+import com.mp.sdk.LegalEntityResponse;
+import com.mp.sdk.LegalEntityRetrievalResponse;
+import com.mp.sdk.PrincipalCreateResponse;
+import com.mp.sdk.PrincipalDeleteResponse;
+import com.mp.sdk.Response;
+import com.mp.sdk.SubMerchantCreateResponse;
+import com.mp.sdk.SubMerchantRetrievalResponse;
+import com.mp.sdk.XMLConverters;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 public class TestXMLConverters {
 
     @Test
@@ -477,6 +495,55 @@ public class TestXMLConverters {
     }
 
     @Test
+    public void testGenerateAgreementRetrievalResponse(){
+        String XMLresponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<legalEntityAgreementRetrievalResponse\n" +
+                "xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
+                "<legalEntityId>82826972905308177</legalEntityId>\n" +
+                "<transactionId>46226972904898673</transactionId>\n" +
+                "<agreements>\n" +
+                "<legalEntityAgreement>\n" +
+                "<legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
+                "<agreementVersion>agreementVersion1</agreementVersion>\n" +
+                "<userFullName>userFullName</userFullName>\n" +
+                "<userSystemName>systemUserName</userSystemName>\n" +
+                "<userIPAddress>196.198.100.100</userIPAddress>\n" +
+                "<manuallyEntered>false</manuallyEntered>\n" +
+                "<acceptanceDateTime>2017-06-11T13:00:00-05:00</acceptanceDateTime>\n" +
+                "</legalEntityAgreement>\n" +
+                "<legalEntityAgreement>\n" +
+                "<legalEntityAgreementType> MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
+                "<agreementVersion>agreementVersion4</agreementVersion>\n" +
+                "<userFullName>userFullNameFour</userFullName>\n" +
+                "<userSystemName>systemUserNameFour</userSystemName>\n" +
+                "<userIPAddress>199.12.15.201</userIPAddress>\n" +
+                "<manuallyEntered>false</manuallyEntered>\n" +
+                "<acceptanceDateTime>2017-06-24T02:59:30-05:00</acceptanceDateTime>\n" +
+                "</legalEntityAgreement>\n" +
+                "<legalEntityAgreement> <legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
+                "<agreementVersion>agreementVersion3</agreementVersion>\n" +
+                "<userFullName>userFullNameThree</userFullName>\n" +
+                "<userSystemName>systemUserNameThree</userSystemName>\n" +
+                "<userIPAddress>210.13.154.155</userIPAddress>\n" +
+                "<manuallyEntered>false</manuallyEntered>\n" +
+                "<acceptanceDateTime>2017-06-23T01:59:30-05:00</acceptanceDateTime>\n" +
+                "</legalEntityAgreement>\n" +
+                "<legalEntityAgreement>\n" +
+                "<legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
+                "<agreementVersion>agreementVersion2</agreementVersion>\n" +
+                "<userFullName>userFullNameTwo</userFullName>\n" +
+                "<userSystemName>systemUserNameTwo</userSystemName>\n" +
+                "<manuallyEntered>true</manuallyEntered>\n" +
+                "<acceptanceDateTime>2017-06-19T23:59:30-05:00</acceptanceDateTime>\n" +
+                "</legalEntityAgreement>\n" +
+                "</agreements>\n" +
+                "</legalEntityAgreementRetrievalResponse>";
+        LegalEntityAgreementRetrievalResponse response = XMLConverters.generateAgreementRetrievalResponse(XMLresponse);
+        assertNotNull(response);
+    }
+
+
+    @Test
     public void testGenerateAgreementCreateRequest() {
 
         LegalEntityAgreementCreateRequest request = new LegalEntityAgreementCreateRequest();
@@ -486,6 +553,17 @@ public class TestXMLConverters {
         String reqString = XMLConverters.generateAgreementCreateRequest(request);
         assertNotNull(reqString);
     }
+
+    @Test
+    public void testGenerateLegalEntityCreateRequest(){
+        LegalEntityCreateRequest request = new LegalEntityCreateRequest();
+        String Name = "name";
+        LegalEntityType type = LegalEntityType.CORPORATION;
+        String annualCreditCardSalesVolume = "40";
+        Boolean hasAcceptedCreditCards = true;
+        Address address = new Address();
+    }
+
 
 
 }
