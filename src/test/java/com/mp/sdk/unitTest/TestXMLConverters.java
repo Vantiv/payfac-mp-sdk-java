@@ -8,10 +8,15 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.io.StringWriter;
 import java.security.Principal;
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 
 import com.mp.sdk.Address;
 import com.mp.sdk.ApprovedMccResponse;
+import com.mp.sdk.CnpContext;
 import com.mp.sdk.ErrorResponse;
 import com.mp.sdk.LegalEntityAgreement;
 import com.mp.sdk.LegalEntityAgreementCreateRequest;
@@ -26,6 +31,7 @@ import com.mp.sdk.LegalEntityResponse;
 import com.mp.sdk.LegalEntityRetrievalResponse;
 import com.mp.sdk.LegalEntityType;
 import com.mp.sdk.LegalEntityUpdateRequest;
+import com.mp.sdk.ObjectFactory;
 import com.mp.sdk.PayFacException;
 import com.mp.sdk.PrincipalCreateResponse;
 import com.mp.sdk.PrincipalDeleteResponse;
@@ -568,7 +574,6 @@ public class TestXMLConverters {
     @Test
     public void testGenerateLegalEntityCreateRequest(){
         LegalEntityCreateRequest request = new LegalEntityCreateRequest();
-
         String name = "name";
         LegalEntityType type = LegalEntityType.CORPORATION;
         LegalEntityOwnershipType ownershipType = LegalEntityOwnershipType.PRIVATE;
@@ -584,7 +589,6 @@ public class TestXMLConverters {
         request.setHasAcceptedCreditCards(hasAcceptedCreditCards);
         request.setAddress(address);
         request.setPrincipal(principal);
-
         String reqString = XMLConverters.generateLegalEntityCreateRequest(request);
         assertNotNull(reqString);
     }
@@ -646,12 +650,13 @@ public class TestXMLConverters {
 
     @Test(expected = Exception.class)
     public void testRequestMarshaller_exception(){
-        XMLConverters.generateLegalEntityCreateRequest(null);
+        LegalEntityCreateRequest request = new LegalEntityCreateRequest();
+        XMLConverters.requestMarshaller(request);
     }
 
     @Test(expected = PayFacException.class)
     public void testresponseUnmarshaller_exception(){
-        XMLConverters.generateLegalEntityPrincipalDeleteResponse("");
+        XMLConverters.responseUnmarshaller("");
     }
 
 }

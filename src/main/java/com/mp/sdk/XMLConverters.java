@@ -29,17 +29,15 @@ public class XMLConverters {
         return (LegalEntityCreateResponse) responseUnmarshaller(xmlResponse);
     }
 
-
 //    public static LegalEntityPrincipalCreateResponse generateLegalEntityPrincipalCreateResponse(String xmlResponse) {
 //
 //        return (LegalEntityPrincipalCreateResponse) responseUnmarshaller(xmlResponse);
 //    }
-
-    // not be used, only for test.
-    public static LegalEntityPrincipalDeleteResponse generateLegalEntityPrincipalDeleteResponse(String xmlResponse) {
-
-        return (LegalEntityPrincipalDeleteResponse) responseUnmarshaller(xmlResponse);
-    }
+//
+//    public static LegalEntityPrincipalDeleteResponse generateLegalEntityPrincipalDeleteResponse(String xmlResponse) {
+//
+//        return (LegalEntityPrincipalDeleteResponse) responseUnmarshaller(xmlResponse);
+//    }
 
     public static LegalEntityResponse generateLegalEntityResponse(String xmlResponse) {
 
@@ -88,8 +86,8 @@ public class XMLConverters {
     }
 
     public static String generateLegalEntityCreateRequest(LegalEntityCreateRequest request) {
-
-        return requestMarshaller(request);
+        JAXBElement<LegalEntityCreateRequest> requestJAXBElement = new ObjectFactory().createLegalEntityCreateRequest(request);
+        return requestMarshaller(requestJAXBElement);
     }
 
     public static String generatePrincipalCreateRequest(LegalEntityPrincipalCreateRequest request) {
@@ -103,8 +101,8 @@ public class XMLConverters {
     }
 
     public static String generateSubMerchantCreateRequest(SubMerchantCreateRequest request) {
-
-        return requestMarshaller(request);
+        JAXBElement<SubMerchantCreateRequest> requestJAXBElement = new ObjectFactory().createSubMerchantCreateRequest(request);
+        return requestMarshaller(requestJAXBElement);
     }
 
     public static String generateSubMerchantUpdateRequest(SubMerchantUpdateRequest request) {
@@ -136,11 +134,9 @@ public class XMLConverters {
             throw new PayFacException("Error validating xml data against the schema", ex);
         }
 
-
         if(response instanceof JAXBElement){
             return  ((JAXBElement) response).getValue();
         }
-
         return response;
     }
 }

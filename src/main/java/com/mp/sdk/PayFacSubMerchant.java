@@ -91,7 +91,7 @@ public class PayFacSubMerchant {
         String url = baseUrl + suffix;
         String subMerchantrequest = XMLConverters.generateSubMerchantUpdateRequest(request);
 
-        Response response = XMLConverters.generateResponse(communication.httpPutRequest(subMerchantrequest, url));
+        Response response = (Response) XMLConverters.generateResponse(communication.httpPutRequest(subMerchantrequest, url));
         return response;
     }
 
