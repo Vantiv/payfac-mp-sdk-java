@@ -12,6 +12,14 @@ repositories {
 
 }
 
+jacocoTestReport {
+    executionData = fileTree(dir:"${buildDir}/jacoco/", include:"*.exec")
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
 configurations {
 
     generateJAXB.extendsFrom mainRuntime

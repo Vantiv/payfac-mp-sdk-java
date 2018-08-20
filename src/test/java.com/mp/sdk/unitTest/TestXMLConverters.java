@@ -1,4 +1,4 @@
-package com.mp.sdk;
+package java.com.mp.sdk.unitTest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,19 +10,30 @@ import static org.junit.Assert.assertNotNull;
 
 import java.security.Principal;
 
+import com.mp.sdk.Address;
 import com.mp.sdk.ApprovedMccResponse;
 import com.mp.sdk.ErrorResponse;
 import com.mp.sdk.LegalEntityAgreement;
 import com.mp.sdk.LegalEntityAgreementCreateRequest;
 import com.mp.sdk.LegalEntityAgreementCreateResponse;
+import com.mp.sdk.LegalEntityAgreementRetrievalResponse;
+import com.mp.sdk.LegalEntityCreateRequest;
 import com.mp.sdk.LegalEntityCreateResponse;
+import com.mp.sdk.LegalEntityOwnershipType;
+import com.mp.sdk.LegalEntityPrincipal;
+import com.mp.sdk.LegalEntityPrincipalCreateRequest;
 import com.mp.sdk.LegalEntityResponse;
 import com.mp.sdk.LegalEntityRetrievalResponse;
+import com.mp.sdk.LegalEntityType;
+import com.mp.sdk.LegalEntityUpdateRequest;
+import com.mp.sdk.PayFacException;
 import com.mp.sdk.PrincipalCreateResponse;
 import com.mp.sdk.PrincipalDeleteResponse;
 import com.mp.sdk.Response;
+import com.mp.sdk.SubMerchantCreateRequest;
 import com.mp.sdk.SubMerchantCreateResponse;
 import com.mp.sdk.SubMerchantRetrievalResponse;
+import com.mp.sdk.SubMerchantUpdateRequest;
 import com.mp.sdk.XMLConverters;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
@@ -547,8 +558,8 @@ public class TestXMLConverters {
     public void testGenerateAgreementCreateRequest() {
 
         LegalEntityAgreementCreateRequest request = new LegalEntityAgreementCreateRequest();
-        LegalEntityAgreement agreement = new LegalEntityAgreement();
-        request.setLegalEntityAgreement(agreement);
+//        LegalEntityAgreement agreement = new LegalEntityAgreement();
+//        request.setLegalEntityAgreement(agreement);
 
         String reqString = XMLConverters.generateAgreementCreateRequest(request);
         assertNotNull(reqString);
@@ -557,13 +568,90 @@ public class TestXMLConverters {
     @Test
     public void testGenerateLegalEntityCreateRequest(){
         LegalEntityCreateRequest request = new LegalEntityCreateRequest();
-        String Name = "name";
+
+        String name = "name";
         LegalEntityType type = LegalEntityType.CORPORATION;
+        LegalEntityOwnershipType ownershipType = LegalEntityOwnershipType.PRIVATE;
         String annualCreditCardSalesVolume = "40";
         Boolean hasAcceptedCreditCards = true;
         Address address = new Address();
+        LegalEntityPrincipal principal = new LegalEntityPrincipal();
+
+        request.setLegalEntityName(name);
+        request.setLegalEntityType(type);
+        request.setLegalEntityOwnershipType(ownershipType);
+        request.setAnnualCreditCardSalesVolume(annualCreditCardSalesVolume);
+        request.setHasAcceptedCreditCards(hasAcceptedCreditCards);
+        request.setAddress(address);
+        request.setPrincipal(principal);
+
+        String reqString = XMLConverters.generateLegalEntityCreateRequest(request);
+        assertNotNull(reqString);
     }
 
+    @Test
+    public void testGeneratePrincipalCreateRequest(){
+        LegalEntityPrincipalCreateRequest request = new LegalEntityPrincipalCreateRequest();
+        LegalEntityPrincipal principal = new LegalEntityPrincipal();
+        request.setPrincipal(principal);
 
+        String reqString = XMLConverters.generatePrincipalCreateRequest(request);
+        assertNotNull(reqString);
+    }
+
+    @Test
+    public void testGenerateUpdateRequest(){
+        LegalEntityUpdateRequest request = new LegalEntityUpdateRequest();;
+        String reqString = XMLConverters.generateUpdateRequest(request);
+        assertNotNull(reqString);
+    }
+
+    @Test
+    public void testGenerateSubMerchantCreateRequest(){
+        SubMerchantCreateRequest request = new SubMerchantCreateRequest();
+
+        String name = "name";
+        String url = "url";
+        String customerServiceNumber = "11";
+        String hardCodedBillingDescriptor = "aaa";
+        long maxTransactionAmount = 123;
+        String merchantCategoryCOde = "2";
+        String bankRoutingNumber = "123";
+        String bankAccountNumber = "1234";
+        String pspMerchantId = "112";
+        String settlementCurrency = "123";
+
+        request.setMerchantName(name);
+        request.setUrl(url);
+        request.setCustomerServiceNumber(customerServiceNumber);
+        request.setHardCodedBillingDescriptor(hardCodedBillingDescriptor);
+        request.setMaxTransactionAmount(maxTransactionAmount);
+        request.setMerchantCategoryCode(merchantCategoryCOde);
+        request.setBankRoutingNumber(bankRoutingNumber);
+        request.setBankAccountNumber(bankAccountNumber);
+        request.setPspMerchantId(pspMerchantId);
+        request.setSettlementCurrency(settlementCurrency);
+
+        String reqString = XMLConverters.generateSubMerchantCreateRequest(request);
+        assertNotNull(reqString);
+    }
+
+    @Test
+    public void testGenerateSubMerchantUpdateRequest(){
+        SubMerchantUpdateRequest request = new SubMerchantUpdateRequest();
+
+        String reqString = XMLConverters.generateSubMerchantUpdateRequest(request);
+        assertNotNull(reqString);
+    }
+
+    @Test(expected = Exception.class)
+    public void testRequestMarshaller_exception(){
+        XMLConverters.generateLegalEntityCreateRequest(null);
+    }
+
+    @Test(expected = PayFacException.class)
+    public void testresponseUnmarshaller_exception(){
+        XMLConverters.generateLegalEntityPrincipalDeleteResponse("");
+    }
 
 }

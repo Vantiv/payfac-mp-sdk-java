@@ -29,15 +29,17 @@ public class XMLConverters {
         return (LegalEntityCreateResponse) responseUnmarshaller(xmlResponse);
     }
 
+
 //    public static LegalEntityPrincipalCreateResponse generateLegalEntityPrincipalCreateResponse(String xmlResponse) {
 //
 //        return (LegalEntityPrincipalCreateResponse) responseUnmarshaller(xmlResponse);
 //    }
-//
-//    public static LegalEntityPrincipalDeleteResponse generateLegalEntityPrincipalDeleteResponse(String xmlResponse) {
-//
-//        return (LegalEntityPrincipalDeleteResponse) responseUnmarshaller(xmlResponse);
-//    }
+
+    // not be used, only for test.
+    public static LegalEntityPrincipalDeleteResponse generateLegalEntityPrincipalDeleteResponse(String xmlResponse) {
+
+        return (LegalEntityPrincipalDeleteResponse) responseUnmarshaller(xmlResponse);
+    }
 
     public static LegalEntityResponse generateLegalEntityResponse(String xmlResponse) {
 
