@@ -26,16 +26,6 @@ repositories {
 
 }
 
-jacocoTestReport {
-    executionData = fileTree(dir:"${buildDir}/jacoco/", include:"*.exec")
-    reports {
-        xml.enabled true
-        html.enabled true
-    }
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 configurations {
 
@@ -89,6 +79,16 @@ clean {
     delete 'test'
 }
 
+jacocoTestReport {
+    executionData = fileTree(dir:"${buildDir}/jacoco/", include:"*.exec")
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+check.dependsOn jacocoTestReport
+
 jar{
     manifest {
         attributes("Implementation-Title":"Merchant Provisioner Payfac SDK For Java 1.5 and greater", "Implementation-Version":"${JAR_VERSION}","Implementation-Vendor":"vantiv","Main-Class":"com.cnp.sdk.Setup")
@@ -101,6 +101,13 @@ jar{
 javadoc{
     destinationDir = file("$buildDir/kit/java15/doc")
 }
+
+
+test {
+    reports.junitXml.destination = "$buildDir/test-results/unit"
+    reports.html.destination = "$buildDir/reports/tests/unit"
+}
+
 
 task generateJaxbClasses() {
     compileJava.dependsOn it
