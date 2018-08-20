@@ -1,4 +1,4 @@
-package java.com.mp.sdk.unitTest;
+package com.mp.sdk.unitTest;
 
 import org.junit.Before;
 import org.junit.Test;
