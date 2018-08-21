@@ -2,23 +2,10 @@ package com.mp.sdk.unitTest;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 import static org.junit.Assert.assertNotNull;
-
-import java.io.StringWriter;
-import java.security.Principal;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-
 import com.mp.sdk.Address;
 import com.mp.sdk.ApprovedMccResponse;
-import com.mp.sdk.CnpContext;
 import com.mp.sdk.ErrorResponse;
-import com.mp.sdk.LegalEntityAgreement;
 import com.mp.sdk.LegalEntityAgreementCreateRequest;
 import com.mp.sdk.LegalEntityAgreementCreateResponse;
 import com.mp.sdk.LegalEntityAgreementRetrievalResponse;
@@ -31,7 +18,6 @@ import com.mp.sdk.LegalEntityResponse;
 import com.mp.sdk.LegalEntityRetrievalResponse;
 import com.mp.sdk.LegalEntityType;
 import com.mp.sdk.LegalEntityUpdateRequest;
-import com.mp.sdk.ObjectFactory;
 import com.mp.sdk.PayFacException;
 import com.mp.sdk.PrincipalCreateResponse;
 import com.mp.sdk.PrincipalDeleteResponse;
@@ -41,7 +27,6 @@ import com.mp.sdk.SubMerchantCreateResponse;
 import com.mp.sdk.SubMerchantRetrievalResponse;
 import com.mp.sdk.SubMerchantUpdateRequest;
 import com.mp.sdk.XMLConverters;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class TestXMLConverters {
     XMLConverters xmlConverters;

@@ -25,6 +25,8 @@ import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
@@ -164,13 +166,18 @@ public class Communication {
     private String execHttpRequest(HttpRequestBase request) {
 
         prepareHttpRequest(request);
-
+        String endpoint = request.getURI().toString();
+        String finalUri = null;
         try {
+            finalUri = config.getProperty("url") + endpoint;
+            request.setURI(new URI(finalUri));
             HttpResponse response = httpClient.execute(request);
             return validateResponse(response);
         }
         catch (IOException ex) {
             throw new PayFacException(CONNECTION_EXCEPTION_MESSAGE, ex);
+        } catch (URISyntaxException ex) {
+            throw new PayFacException("Invalid URI: " + finalUri, ex);
         }
         finally {
             System.out.println("Headers");
@@ -191,7 +198,7 @@ public class Communication {
             int statusCode = response.getStatusLine().getStatusCode();
             xml = EntityUtils.toString(entity, XML_ENCODING);
 
-            if(statusCode != 200 || statusCode != 201) {
+            if(statusCode != 200 && statusCode != 201) {
                 printToConsole("\nErrorResponse: ", xml);
                 if(contentType.contains(HEADER_VALUE)) {
                     ErrorResponse errorResponse = XMLConverters.generateErrorResponse(xml);

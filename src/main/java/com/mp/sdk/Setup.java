@@ -6,7 +6,7 @@ import java.util.Properties;
 public class Setup {
 
     private enum EnvironmentConfiguration {
-        SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox"),
+        SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox/payfac"),
         PRELIVE("prelive", "https://services.vantivprelive.com"),
         POSTLIVE("postlive", "https://services.vantivpostlive.com"),
         PRODUCTION("production", "https://services.vantivcnp.com"),

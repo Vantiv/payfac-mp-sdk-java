@@ -39,7 +39,7 @@ public class Configuration {
         FileInputStream fileInputStream = null;
         try {
             properties = new Properties();
-            fileInputStream = new FileInputStream((new Configuration()).location());
+            fileInputStream = new FileInputStream(location());
             properties.load(fileInputStream);
             return properties;
         } catch (FileNotFoundException e) {

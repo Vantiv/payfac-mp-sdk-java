@@ -21,7 +21,7 @@ public class TestConfiguration {
     assertNotNull(file);
   }
 
-  @Test(expected = Exception.class)
+  @Test
   public void testGetProperties_exception(){
     Properties properties = configuration.getProperties();
     assertNotNull(properties);
