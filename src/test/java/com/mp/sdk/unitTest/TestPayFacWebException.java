@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.mp.sdk.PayFacWebException;
 
-public class testPayFacWebException {
+public class TestPayFacWebException {
     PayFacWebException payFacWebException;
 
 
