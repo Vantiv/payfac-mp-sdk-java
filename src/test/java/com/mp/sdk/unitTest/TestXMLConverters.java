@@ -44,6 +44,12 @@ import com.mp.sdk.XMLConverters;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class TestXMLConverters {
+    XMLConverters xmlConverters;
+
+    @Before
+    public void setUp(){
+        xmlConverters = new XMLConverters();
+    }
 
     @Test
     public void testGenerateMccResponse() {

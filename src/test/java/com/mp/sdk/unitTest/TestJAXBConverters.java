@@ -1,5 +1,6 @@
 package com.mp.sdk.unitTest;
 
+import com.mp.sdk.CalendarPrinter;
 import com.mp.sdk.JAXBConverters;
 import java.util.Calendar;
 import org.junit.Before;
@@ -10,11 +11,15 @@ public class TestJAXBConverters {
 
   String temString;
   String longString;
+  CalendarPrinter calendarPrinter;
+  JAXBConverters jaxbConverters;
 
   @Before
   public void setUp() {
     temString = "1234";
     longString = "9000000000000000000";
+    calendarPrinter = new CalendarPrinter();
+    jaxbConverters = new JAXBConverters();
   }
 
   @Test
