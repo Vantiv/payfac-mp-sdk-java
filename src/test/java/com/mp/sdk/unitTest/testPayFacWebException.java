@@ -15,7 +15,8 @@ public class testPayFacWebException {
 
     @Test
     public void testPayFacWebException_message_code_errorList(){
-        payFacWebException = new PayFacWebException("test message","1",new ArrayList<>());
+        ArrayList<String> errorList = new ArrayList<>();
+        payFacWebException = new PayFacWebException("test message","1",errorList);
     }
 
     @Test
