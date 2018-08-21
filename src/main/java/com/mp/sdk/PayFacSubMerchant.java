@@ -29,38 +29,22 @@ public class PayFacSubMerchant {
         return getSubMerchantResponse("legalentity", String.valueOf(legalEntityId), "submerchant", String.valueOf(subMerchantId));
     }
 
-    public SubMerchantCreateResponse postByCredentials(long legalEntityId, boolean withCredentials) {
-
-        SubMerchantCreateRequest request = new SubMerchantCreateRequest();
-
-        request.setCreateCredentials(withCredentials);
+    public SubMerchantCreateResponse postSubMerchant(long legalEntityId, SubMerchantCreateRequest request) {
 
         return postSubMerchantResponse("legalentity", String.valueOf(legalEntityId), "submerchant", request);
     }
 
-    public SubMerchantCreateResponse postByDuplicate(long legalEntityId, String merchantName) {
-
-        SubMerchantCreateRequest request = new SubMerchantCreateRequest();
-
-        request.setMerchantName(merchantName);
-
+    public SubMerchantCreateResponse postSubMerchantWithDuplicateAll(long legalEntityId, SubMerchantCreateRequest request) {
+        request.setMerchantName("duplicate all matching");
         return postSubMerchantResponse("legalentity", String.valueOf(legalEntityId), "submerchant", request);
     }
 
-    public SubMerchantCreateResponse postByCredentialsAndDuplicate(long legalEntityId, boolean withCredentials, String merchantName) {
-
-        SubMerchantCreateRequest request = new SubMerchantCreateRequest();
-
-        request.setCreateCredentials(withCredentials);
-        request.setMerchantName(merchantName);
-
+    public SubMerchantCreateResponse postSubMerchantWithDuplicateNotAll(long legalEntityId, SubMerchantCreateRequest request) {
+        request.setMerchantName("duplicate not matching");
         return postSubMerchantResponse("legalentity", String.valueOf(legalEntityId), "submerchant", request);
     }
 
-    public Response putBySubMerchantId(long legalEntityId, long subMerchantId) {
-
-        SubMerchantUpdateRequest request = new SubMerchantUpdateRequest();
-
+    public Response putBySubMerchantId(long legalEntityId, long subMerchantId,SubMerchantUpdateRequest request) {
         return putSubMerchantResponse("legalentity", String.valueOf(legalEntityId), "submerchant", String.valueOf(subMerchantId), request);
     }
 
@@ -69,7 +53,7 @@ public class PayFacSubMerchant {
         String suffix = "/" + key + "/" + value + "/" + key2 + "/" + value2;
 
         String url = baseUrl + suffix;
-        SubMerchantRetrievalResponse response = XMLConverters.generateSubMerchantRetrievalResponse(communication.httpDeleteRequest(url));
+        SubMerchantRetrievalResponse response = XMLConverters.generateSubMerchantRetrievalResponse(communication.httpGetRequest(url));
         return response;
     }
 

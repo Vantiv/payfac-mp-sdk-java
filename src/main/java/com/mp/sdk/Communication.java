@@ -44,16 +44,19 @@ public class Communication {
     private final String CONNECTION_EXCEPTION_MESSAGE = "Error connecting to Vantiv";
     private final String XML_ENCODING = "UTF-8";
     private Properties config;
+    private String baseUrl;
 
 
     public Communication(Properties config) {
         setupCommunication();
         this.config = config;
+        baseUrl = config.getProperty("url");
     }
 
     public Communication() {
         setupCommunication();
         this.config = (new Configuration()).getProperties();
+        baseUrl = config.getProperty("url");
     }
 
 
@@ -166,18 +169,12 @@ public class Communication {
     private String execHttpRequest(HttpRequestBase request) {
 
         prepareHttpRequest(request);
-        String endpoint = request.getURI().toString();
-        String finalUri = null;
         try {
-            finalUri = config.getProperty("url") + endpoint;
-            request.setURI(new URI(finalUri));
             HttpResponse response = httpClient.execute(request);
             return validateResponse(response);
         }
         catch (IOException ex) {
             throw new PayFacException(CONNECTION_EXCEPTION_MESSAGE, ex);
-        } catch (URISyntaxException ex) {
-            throw new PayFacException("Invalid URI: " + finalUri, ex);
         }
         finally {
             System.out.println("Headers");
