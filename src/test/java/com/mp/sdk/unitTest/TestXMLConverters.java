@@ -583,7 +583,6 @@ public class TestXMLConverters {
         String reqString = XMLConverters.generateLegalEntityCreateRequest(request);
         assertNotNull(reqString);
     }
-
     @Test
     public void testGeneratePrincipalCreateRequest(){
         LegalEntityPrincipalCreateRequest request = new LegalEntityPrincipalCreateRequest();

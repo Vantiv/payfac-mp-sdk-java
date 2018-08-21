@@ -29,20 +29,11 @@ public class PayFacLegalEntity {
         return getLegalEntityResponse("legalentity", String.valueOf(legalEntityId));
     }
 
-    public LegalEntityCreateResponse postByLegalEntity(LegalEntityPrincipal principal) {
-
-        LegalEntityCreateRequest request = new LegalEntityCreateRequest();
-        request.setPrincipal(principal);
-
+    public LegalEntityCreateResponse postByLegalEntity(LegalEntityCreateRequest request) {
         return postLegalEntityResponse("legalentity", request);
     }
 
-    public LegalEntityResponse putByLegalEntity(long legalEntityId, LegalEntityPrincipalUpdatable principal, LegalEntityBackgroundCheckFields fields) {
-
-        LegalEntityUpdateRequest request = new LegalEntityUpdateRequest();
-        request.setPrincipal(principal);
-        request.setBackgroundCheckFields(fields);
-
+    public LegalEntityResponse putByLegalEntity(long legalEntityId, LegalEntityUpdateRequest request) {
         return putLegalEntityResponse("legalentity", String.valueOf(legalEntityId), request);
     }
 
