@@ -69,4 +69,5 @@ public class TestPayFacAgreement {
         payFacAgreement.getByLegalEntity(201400);
     }
 
+
 }

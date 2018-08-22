@@ -73,7 +73,6 @@ public class TestPayFacLegalEntity {
         calendar.setTime(date);
 
         principal = new LegalEntityPrincipal();
-        legalEntityPrincipalUpdatable = new LegalEntityPrincipalUpdatable();
         principal.setTitle("Chief Financial Officer");
         principal.setFirstName("First");
         principal.setLastName("Last");
@@ -85,6 +84,8 @@ public class TestPayFacLegalEntity {
         principal.setDriversLicenseState("MA");
         principal.setAddress(principalAddress);
         principal.setStakePercent(33);
+
+        legalEntityPrincipalUpdatable = new LegalEntityPrincipalUpdatable();
         legalEntityPrincipalUpdatable.setTitle("CEO");
         legalEntityPrincipalUpdatable.setPrincipalId(9);
         legalEntityPrincipalUpdatable.setEmailAddress("abc@gmail.com");

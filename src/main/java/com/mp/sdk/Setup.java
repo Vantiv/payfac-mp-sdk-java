@@ -7,7 +7,7 @@ public class Setup {
 
     private enum EnvironmentConfiguration {
         SANDBOX("sandbox", "https://www.testvantivcnp.com/sandbox/payfac"),
-        PRELIVE("prelive", "https://services.vantivprelive.com"),
+        PRELIVE("prelive", "https://payfac.vantivprelive.com"),
         POSTLIVE("postlive", "https://services.vantivpostlive.com"),
         PRODUCTION("production", "https://services.vantivcnp.com"),
         OTHER("other", "You will be asked for all the values");
