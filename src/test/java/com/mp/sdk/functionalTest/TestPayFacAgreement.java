@@ -19,6 +19,7 @@ import com.mp.sdk.Configuration;
 import com.mp.sdk.LegalEntityAgreement;
 import com.mp.sdk.LegalEntityAgreementType;
 import com.mp.sdk.PayFacAgreement;
+import com.mp.sdk.PayFacWebException;
 
 public class TestPayFacAgreement {
     private PayFacAgreement payFacAgreement;
@@ -62,4 +63,10 @@ public class TestPayFacAgreement {
     public void testGetByLegalEntity(){
         payFacAgreement.getByLegalEntity(201003);
     }
+
+    @Test(expected = PayFacWebException.class)
+    public void testGetByLegalEntity_ex(){
+        payFacAgreement.getByLegalEntity(201400);
+    }
+
 }

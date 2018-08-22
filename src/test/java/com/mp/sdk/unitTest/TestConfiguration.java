@@ -1,9 +1,9 @@
 package com.mp.sdk.unitTest;
 
 import com.mp.sdk.Configuration;
-import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.io.File;
 import static org.junit.Assert.*;
 
@@ -19,11 +19,5 @@ public class TestConfiguration {
   public void testLocation(){
     File file = configuration.location();
     assertNotNull(file);
-  }
-
-  @Test
-  public void testGetProperties_exception(){
-    Properties properties = configuration.getProperties();
-    assertNotNull(properties);
   }
 }
