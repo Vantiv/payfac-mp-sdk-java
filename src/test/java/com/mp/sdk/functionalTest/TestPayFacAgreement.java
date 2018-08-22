@@ -21,22 +21,18 @@ import com.mp.sdk.LegalEntityAgreementType;
 import com.mp.sdk.PayFacAgreement;
 
 public class TestPayFacAgreement {
-    PayFacAgreement payFacAgreement;
-    PayFacAgreement payFacAgreement2;
-    Configuration configuration;
-    Properties config;
-    Communication communication;
-    LegalEntityAgreement legalEntityAgreement;
-    XMLGregorianCalendar xmlGregorianCalendar;
+    private PayFacAgreement payFacAgreement;
+    private Communication communication;
+    private LegalEntityAgreement legalEntityAgreement;
 
 
     @Before
     public void setUp() throws ParseException, DatatypeConfigurationException {
         communication = new Communication();
-        configuration = new Configuration();
-        config = configuration.getProperties();
+        Configuration configuration = new Configuration();
+        Properties config = configuration.getProperties();
         payFacAgreement = new PayFacAgreement();
-        payFacAgreement2 = new PayFacAgreement(config);
+        PayFacAgreement payFacAgreement2 = new PayFacAgreement(config);
         legalEntityAgreement = new LegalEntityAgreement();
         legalEntityAgreement.setLegalEntityAgreementType(LegalEntityAgreementType.MERCHANT_AGREEMENT);
         legalEntityAgreement.setAgreementVersion("v1");
@@ -48,7 +44,7 @@ public class TestPayFacAgreement {
         Date date = format.parse("2014-04-24 11:15:00");
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
+        XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
         legalEntityAgreement.setAcceptanceDateTime(xmlGregorianCalendar);
     }
 

@@ -44,7 +44,7 @@ public class PayFacSubMerchant {
         return postSubMerchantResponse("legalentity", String.valueOf(legalEntityId), "submerchant", request);
     }
 
-    public Response putBySubMerchantId(long legalEntityId, long subMerchantId,SubMerchantUpdateRequest request) {
+    public Response putBySubMerchantId(long legalEntityId, long subMerchantId, SubMerchantUpdateRequest request) {
         return putSubMerchantResponse("legalentity", String.valueOf(legalEntityId), "submerchant", String.valueOf(subMerchantId), request);
     }
 
