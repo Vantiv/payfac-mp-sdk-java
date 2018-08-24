@@ -17,21 +17,25 @@ public class TestPayFacWebException {
     public void testPayFacWebException_message_code_errorList(){
         ArrayList<String> errorList = new ArrayList<>();
         payFacWebException = new PayFacWebException("test message","1",errorList);
+        assertEquals("1",payFacWebException.getCode());
     }
 
     @Test
     public void testPayFacWebException_message_code(){
         payFacWebException = new PayFacWebException("test message","1");
+        assertEquals("1",payFacWebException.getCode());
     }
 
     @Test
     public void testPayFacWebException_message_ume(){
         payFacWebException = new PayFacWebException("test message",new Exception());
+        assertEquals("0",payFacWebException.getCode());
     }
 
     @Test
     public void testPayFacWebException_message(){
         payFacWebException = new PayFacWebException("test message");
+        assertEquals("0",payFacWebException.getCode());
     }
 
     @Test

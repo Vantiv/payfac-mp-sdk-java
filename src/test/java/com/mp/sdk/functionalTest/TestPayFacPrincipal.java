@@ -1,20 +1,20 @@
 package com.mp.sdk.functionalTest;
 
-import java.security.Principal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
-import com.mp.sdk.AddressUpdatable;
 import com.mp.sdk.Communication;
 import com.mp.sdk.Configuration;
 import com.mp.sdk.LegalEntityPrincipal;
-import com.mp.sdk.LegalEntityPrincipalCreateRequest;
 import com.mp.sdk.PayFacPrincipal;
 import com.mp.sdk.PrincipalAddress;
+import com.mp.sdk.PrincipalCreateResponse;
+import com.mp.sdk.PrincipalDeleteResponse;
 
 public class TestPayFacPrincipal {
     PayFacPrincipal payFacPrincipal;
@@ -66,11 +66,17 @@ public class TestPayFacPrincipal {
 
     @Test
     public void testDeleteLegalEntityByPrincipalId(){
-        payFacPrincipal.deleteLegalEntityByPrincipalId(2018,9);
+        PrincipalDeleteResponse response = payFacPrincipal.deleteLegalEntityByPrincipalId(2018,9);
+        assertNotNull(response.getTransactionId());
+        assertEquals("2018",response.getLegalEntityId());
+        assertEquals(9l,(long)response.getPrincipalId());
+        assertEquals("Legal Entity Principal successfully deleted",response.getResponseDescription());
     }
 
     @Test
     public void testPostByLegalEntityID(){
-        payFacPrincipal.postByLegalEntityID(2018,principal);
+        PrincipalCreateResponse response = payFacPrincipal.postByLegalEntityID(2018,principal);
+        assertNotNull(response.getTransactionId());
+        assertEquals("2018",response.getLegalEntityId());
     }
 }

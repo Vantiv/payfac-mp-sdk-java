@@ -13,10 +13,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import com.mp.sdk.Communication;
 import com.mp.sdk.Configuration;
 import com.mp.sdk.LegalEntityAgreement;
+import com.mp.sdk.LegalEntityAgreementCreateResponse;
+import com.mp.sdk.LegalEntityAgreementRetrievalResponse;
 import com.mp.sdk.LegalEntityAgreementType;
 import com.mp.sdk.PayFacAgreement;
 import com.mp.sdk.PayFacWebException;
@@ -56,12 +59,17 @@ public class TestPayFacAgreement {
 
     @Test
     public void testPostByLegalEntity(){
-        payFacAgreement.postByLegalEntity(201003,legalEntityAgreement);
+        LegalEntityAgreementCreateResponse response = payFacAgreement.postByLegalEntity(201003,legalEntityAgreement);
+        assertNotNull(response.getTransactionId());
+
     }
 
     @Test
     public void testGetByLegalEntity(){
-        payFacAgreement.getByLegalEntity(201003);
+        LegalEntityAgreementRetrievalResponse response = payFacAgreement.getByLegalEntity(201003);
+        assertNotNull(response.getTransactionId());
+        assertEquals("201003",response.getLegalEntityId());
+
     }
 
     @Test(expected = PayFacWebException.class)

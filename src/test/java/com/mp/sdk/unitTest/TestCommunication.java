@@ -4,13 +4,22 @@ import static com.mp.sdk.Communication.getBestProtocol;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
+import com.mp.sdk.ApprovedMccResponse;
 import com.mp.sdk.Communication;
 import com.mp.sdk.Configuration;
+import com.mp.sdk.LegalEntityCreateResponse;
+import com.mp.sdk.LegalEntityResponse;
+import com.mp.sdk.PrincipalDeleteResponse;
+import com.mp.sdk.XMLConverters;
 
 public class TestCommunication {
     Communication communication;
@@ -50,7 +59,11 @@ public class TestCommunication {
 
     @Test
     public void testHttpGetRequest(){
-        communication.httpGetRequest("https://www.testvantivcnp.com/sandbox/payfac/mcc");
+        String response = communication.httpGetRequest("https://www.testvantivcnp.com/sandbox/payfac/mcc");
+        ApprovedMccResponse mccResponse = XMLConverters.generateMccResponse(response);
+        assertNotNull(mccResponse.getTransactionId());
+        assertTrue(mccResponse.getApprovedMccs().getApprovedMccs().contains("5967"));
+        assertTrue(mccResponse.getApprovedMccs().getApprovedMccs().contains("5970"));
     }
 
     @Test
@@ -100,7 +113,11 @@ public class TestCommunication {
                 "\t<legalEntityOwnershipType>PUBLIC</legalEntityOwnershipType>\n" +
                 "\t<yearsInBusiness>10</yearsInBusiness>\n" +
                 "</legalEntityUpdateRequest>";
-        communication.httpPutRequest(xmlRequest,"https://www.testvantivcnp.com/sandbox/payfac/legalentity/1000293");
+        String response = communication.httpPutRequest(xmlRequest,"https://www.testvantivcnp.com/sandbox/payfac/legalentity/1000293");
+        LegalEntityResponse legalEntityResponse = XMLConverters.generateLegalEntityResponse(response);
+        assertNotNull(legalEntityResponse.getTransactionId());
+        assertEquals("1000293",legalEntityResponse.getLegalEntityId());
+        assertEquals((short)10,(short)legalEntityResponse.getResponseCode());
     }
 
     @Test
@@ -145,11 +162,21 @@ public class TestCommunication {
                 "</principal>\n" +
                 "<yearsInBusiness>12</yearsInBusiness>\n" +
                 "</legalEntityCreateRequest>";
-        communication.httpPostRequest(xmlRequest,"https://www.testvantivcnp.com/sandbox/payfac/legalentity");
+        String response = communication.httpPostRequest(xmlRequest,"https://www.testvantivcnp.com/sandbox/payfac/legalentity");
+        LegalEntityCreateResponse legalEntityCreateResponse = XMLConverters.generateCreateResponse(response);
+        assertNotNull(legalEntityCreateResponse.getTransactionId());
+        assertNotNull(legalEntityCreateResponse.getLegalEntityId());
+        assertEquals((short)10,(short)legalEntityCreateResponse.getResponseCode());
     }
 
     @Test
     public void testHttpDeleteRequest(){
-        communication.httpDeleteRequest("https://www.testvantivcnp.com/sandbox/payfac/legalentity/2018/principal/9");
+        String response = communication.httpDeleteRequest("https://www.testvantivcnp.com/sandbox/payfac/legalentity/2018/principal/9");
+        PrincipalDeleteResponse principalDeleteResponse = XMLConverters.generatePrincipalDeleteResponse(response);
+        assertNotNull(principalDeleteResponse.getTransactionId());
+        assertEquals("2018",principalDeleteResponse.getLegalEntityId());
+        assertEquals((long)9,(long)principalDeleteResponse.getPrincipalId());
+        assertEquals("Legal Entity Principal successfully deleted",principalDeleteResponse.getResponseDescription());
+
     }
 }

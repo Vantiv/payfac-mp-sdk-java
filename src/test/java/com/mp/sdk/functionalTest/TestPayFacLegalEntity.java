@@ -6,15 +6,19 @@ import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import com.mp.sdk.Address;
 import com.mp.sdk.AddressUpdatable;
 import com.mp.sdk.Communication;
 import com.mp.sdk.Configuration;
 import com.mp.sdk.LegalEntityCreateRequest;
+import com.mp.sdk.LegalEntityCreateResponse;
 import com.mp.sdk.LegalEntityOwnershipType;
 import com.mp.sdk.LegalEntityPrincipal;
 import com.mp.sdk.LegalEntityPrincipalUpdatable;
+import com.mp.sdk.LegalEntityResponse;
+import com.mp.sdk.LegalEntityRetrievalResponse;
 import com.mp.sdk.LegalEntityType;
 import com.mp.sdk.LegalEntityUpdateRequest;
 import com.mp.sdk.PayFacLegalEntity;
@@ -120,17 +124,27 @@ public class TestPayFacLegalEntity {
 
     @Test
     public void testGetByLegalEntityId(){
-        payFacLegalEntity.getByLegalEntityId(1000293);
+        LegalEntityRetrievalResponse response = payFacLegalEntity.getByLegalEntityId(1000293);
+        assertNotNull(response.getTransactionId());
+        assertEquals("1000293",response.getLegalEntityId());
+        assertEquals((short)10,(short)response.getResponseCode());
+
     }
 
     @Test
     public void testPostByLegalEntity(){
-        payFacLegalEntity.postByLegalEntity(createRequest);
+        LegalEntityCreateResponse response = payFacLegalEntity.postByLegalEntity(createRequest);
+        assertNotNull(response.getTransactionId());
+        assertNotNull(response.getLegalEntityId());
+        assertEquals((short)10,(short)response.getResponseCode());
     }
 
     @Test
     public void testPutByLegalEntity(){
-        payFacLegalEntity.putByLegalEntity(1000293l,updateRequest);
+        LegalEntityResponse response = payFacLegalEntity.putByLegalEntity(1000293l,updateRequest);
+        assertNotNull(response.getTransactionId());
+        assertEquals("1000293",response.getLegalEntityId());
+        assertEquals((short)10,(short)response.getResponseCode());
     }
 
 }

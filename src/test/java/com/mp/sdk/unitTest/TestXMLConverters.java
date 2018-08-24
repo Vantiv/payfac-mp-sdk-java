@@ -2,7 +2,11 @@ package com.mp.sdk.unitTest;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import com.mp.sdk.Address;
 import com.mp.sdk.ApprovedMccResponse;
 import com.mp.sdk.ErrorResponse;
@@ -48,6 +52,9 @@ public class TestXMLConverters {
                 "</approvedMccResponse>";
         ApprovedMccResponse response = XMLConverters.generateMccResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
+        assertTrue(response.getApprovedMccs().getApprovedMccs().contains("5967"));
+        assertTrue(response.getApprovedMccs().getApprovedMccs().contains("5970"));
     }
 
     @Test
@@ -58,6 +65,7 @@ public class TestXMLConverters {
                 "</legalEntityAgreementCreateResponse>";
         LegalEntityAgreementCreateResponse response = XMLConverters.generateAgreementCreateResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
     }
 
     @Test
@@ -176,6 +184,9 @@ public class TestXMLConverters {
                 "</legalEntityCreateResponse>";
         LegalEntityCreateResponse response = XMLConverters.generateCreateResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
+        assertEquals("02013",response.getLegalEntityId());
+        assertEquals((short)10,(short)response.getResponseCode());
     }
 
     @Test
@@ -191,6 +202,10 @@ public class TestXMLConverters {
 
         LegalEntityResponse response = XMLConverters.generateLegalEntityResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
+        assertEquals("2010",response.getLegalEntityId());
+        assertEquals((short)10,(short)response.getResponseCode());
+        assertEquals("Approved",response.getResponseDescription());
     }
 
     @Test
@@ -335,6 +350,9 @@ public class TestXMLConverters {
 
         LegalEntityRetrievalResponse response = XMLConverters.generateRetrievalResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
+        assertEquals("2018",response.getLegalEntityId());
+        assertEquals((short)10,(short)response.getResponseCode());
     }
 
     @Test
@@ -353,6 +371,10 @@ public class TestXMLConverters {
                 "</principalCreateResponse>";
         PrincipalCreateResponse response = XMLConverters.generatePrincipalCreateResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
+        assertEquals("2018",response.getLegalEntityId());
+        assertNotNull(response.getPrincipal());
+
     }
 
     @Test
@@ -367,6 +389,10 @@ public class TestXMLConverters {
         PrincipalDeleteResponse response = XMLConverters.generatePrincipalDeleteResponse(xmlResponse);
 
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
+        assertEquals("2018",response.getLegalEntityId());
+        assertEquals((long)9,(long)response.getPrincipalId());
+        assertEquals("Legal Entity Principal successfully deleted",response.getResponseDescription());
     }
 
     @Test
@@ -377,6 +403,7 @@ public class TestXMLConverters {
                 "</response>";
         Response response = XMLConverters.generateResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
     }
 
     @Test
@@ -417,6 +444,7 @@ public class TestXMLConverters {
 
         SubMerchantCreateResponse response = XMLConverters.generateSubMerchantCreateResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
     }
 
     @Test
@@ -486,6 +514,7 @@ public class TestXMLConverters {
                 "</subMerchantRetrievalResponse>";
         SubMerchantRetrievalResponse response = XMLConverters.generateSubMerchantRetrievalResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
     }
 
     @Test
@@ -500,6 +529,7 @@ public class TestXMLConverters {
 
         ErrorResponse response = XMLConverters.generateErrorResponse(xmlResponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
     }
 
     @Test
@@ -548,6 +578,8 @@ public class TestXMLConverters {
                 "</legalEntityAgreementRetrievalResponse>";
         LegalEntityAgreementRetrievalResponse response = XMLConverters.generateAgreementRetrievalResponse(XMLresponse);
         assertNotNull(response);
+        assertNotNull(response.getTransactionId());
+        assertEquals("82826972905308177",response.getLegalEntityId());
     }
 
 

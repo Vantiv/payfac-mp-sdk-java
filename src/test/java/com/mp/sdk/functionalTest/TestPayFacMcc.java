@@ -1,9 +1,13 @@
 package com.mp.sdk.functionalTest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
+import com.mp.sdk.ApprovedMccResponse;
 import com.mp.sdk.Communication;
 import com.mp.sdk.Configuration;
 import com.mp.sdk.PayFacMcc;
@@ -35,7 +39,11 @@ public class TestPayFacMcc {
 
     @Test
     public void testGetMcc(){
-        payFacMcc.getMcc();
+        ApprovedMccResponse response = payFacMcc.getMcc();
+        assertNotNull(response.getTransactionId());
+        ApprovedMccResponse.ApprovedMccs approvedMccs = response.getApprovedMccs();
+        assertTrue(approvedMccs.getApprovedMccs().contains("5967"));
+        assertTrue(approvedMccs.getApprovedMccs().contains("5970"));
     }
 
 }

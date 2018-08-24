@@ -33,7 +33,7 @@ public class TestJAXBConverters {
   public void testPrintDate() {
     assertNull(JAXBConverters.printDate(null));
     Calendar calendar = JAXBConverters.parseDate(temString);
-    JAXBConverters.printDate(calendar);
+    assertNotNull(JAXBConverters.printDate(calendar));
   }
 
   @Test

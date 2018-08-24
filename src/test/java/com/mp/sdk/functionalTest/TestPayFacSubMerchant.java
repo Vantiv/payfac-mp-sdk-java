@@ -4,15 +4,19 @@ import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import com.mp.sdk.Address;
 import com.mp.sdk.AddressUpdatable;
 import com.mp.sdk.Communication;
 import com.mp.sdk.Configuration;
 import com.mp.sdk.PayFacSubMerchant;
+import com.mp.sdk.Response;
 import com.mp.sdk.SubMerchantCreateRequest;
+import com.mp.sdk.SubMerchantCreateResponse;
 import com.mp.sdk.SubMerchantECheckFeature;
 import com.mp.sdk.SubMerchantPrimaryContactUpdatable;
+import com.mp.sdk.SubMerchantRetrievalResponse;
 import com.mp.sdk.SubMerchantUpdateRequest;
 import com.mp.sdk.XMLConverters;
 
@@ -107,25 +111,36 @@ public class TestPayFacSubMerchant {
 
     @Test
     public void testGetBySubMerchantId(){
-        payFacSubMerchant.getBySubMerchantId(2018,123456);
+        SubMerchantRetrievalResponse response = payFacSubMerchant.getBySubMerchantId(2018,123456);
+        assertNotNull(response.getTransactionId());
+        assertEquals("123456",response.getSubMerchantId());
     }
 
     @Test
     public void testPostSubMerchant(){
-        payFacSubMerchant.postSubMerchant(2018,request);
+        SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchant(2018,request);
+        assertNotNull(response.getTransactionId());
+        assertNotNull(response.getSubMerchantId());
+        assertNull(response.getOriginalSubMerchant());
     }
 
     @Test
     public void testPostSubMerchantWithDuplicateAll(){
-        payFacSubMerchant.postSubMerchantWithDuplicateAll(2018,request);
+        SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchantWithDuplicateAll(2018,request);
+        assertNotNull(response.getTransactionId());
+        assertNotNull(response.getSubMerchantId());
+        assertNull(response.getOriginalSubMerchant());
     }
     @Test
     public void testPostSubMerchantWithDuplicateNotAll(){
-        payFacSubMerchant.postSubMerchantWithDuplicateNotAll(2018,request);
+        SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchantWithDuplicateNotAll(2018,request);
+        assertNotNull(response.getTransactionId());
+        assertNotNull(response.getOriginalSubMerchant());
     }
 
     @Test
     public void testPutBySubMerchantId(){
-        payFacSubMerchant.putBySubMerchantId(2018,123456,updateRequest);
+        Response response = payFacSubMerchant.putBySubMerchantId(2018,123456,updateRequest);
+        assertNotNull(response.getTransactionId());
     }
 }
