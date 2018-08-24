@@ -4,18 +4,14 @@ import static junit.framework.TestCase.assertSame;
 
 import com.mp.sdk.CnpContext;
 import com.mp.sdk.ObjectFactory;
+
 import javax.xml.bind.JAXBContext;
 
-import org.junit.Before;
 import org.junit.Test;
 
-public class TestCnpContext {
-  CnpContext cnpContext;
 
-  @Before
-  public void setUp(){
-    cnpContext = new CnpContext();
-  }
+public class TestCnpContext {
+
 
   @Test
   public void testGetJAXBContextReturnsSameObject() {
@@ -31,5 +27,7 @@ public class TestCnpContext {
     ObjectFactory factory2 = CnpContext.getObjectFactory();
     assertSame(factory1, factory2);
   }
+
+
 }
 
