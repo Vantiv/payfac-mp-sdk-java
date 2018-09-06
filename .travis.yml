@@ -19,6 +19,14 @@ script:
  - echo 'timeout=50000'>>$PAYFAC_CONFIG_FILE
  - echo 'printxml=true'>>$PAYFAC_CONFIG_FILE
  - cat $PAYFAC_CONFIG_FILE
- - gradle -Dorg.gradle.warning.mode=summary build jacocoTestReport
+ - gradle build jacocoTestReport kit
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file_glob: true
+  file: build/kit/dist
+  skip_cleanup: true
+  on:
+    tags: true
 after_success:
  - bash <(curl -s https://codecov.io/bash)
