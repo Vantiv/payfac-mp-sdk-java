@@ -46,7 +46,7 @@ None.
     * Add a file `.payfac_SDK_config.properties` to your home directory with the correct properties in it
 
 ### Configuration
-List of configuration parameters along with their values can be found here.
+List of configuration parameters along with their values can be found [here](https://gist.github.com/VantivSDK/8b7dd606230ec65b36eba457df4443de).
 
 
 ## Usage example
