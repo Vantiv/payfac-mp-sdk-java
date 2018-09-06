@@ -24,7 +24,7 @@ deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file_glob: true
-  file: build/kit/dist
+  file: build/kit/dist/*
   skip_cleanup: true
   on:
     tags: true
