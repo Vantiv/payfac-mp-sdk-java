@@ -134,8 +134,6 @@ public class TestPayFacLegalEntity {
 
     @Test
     public void testPostByLegalEntity(){
-        //String rawXml = XMLConverters.generateLegalEntityCreateRequest(createRequest);
-        //System.out.println(rawXml);
         LegalEntityCreateResponse response = payFacLegalEntity.postByLegalEntity(createRequest);
         assertNotNull(response.getTransactionId());
         assertNotNull(response.getLegalEntityId());
