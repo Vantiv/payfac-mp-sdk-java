@@ -23,7 +23,6 @@ import com.mp.sdk.LegalEntityType;
 import com.mp.sdk.LegalEntityUpdateRequest;
 import com.mp.sdk.PayFacLegalEntity;
 import com.mp.sdk.PrincipalAddress;
-import com.mp.sdk.XMLConverters;
 
 public class TestPayFacLegalEntity {
 
@@ -137,7 +136,6 @@ public class TestPayFacLegalEntity {
         LegalEntityCreateResponse response = payFacLegalEntity.postByLegalEntity(createRequest);
         assertNotNull(response.getTransactionId());
         assertNotNull(response.getLegalEntityId());
-        System.out.println(response);
         assertEquals((short)10,(short)response.getResponseCode());
     }
 
