@@ -329,7 +329,7 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="originallegalEntityId"  minOccurs="0">
+                    <xs:element name="originalLegalEntityId"  minOccurs="0">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
                                 <xs:minLength value="1"/>
@@ -337,7 +337,7 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="originallegalEntityStatus"  minOccurs="0">
+                    <xs:element name="originalLegalEntityStatus"  minOccurs="0">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
                                 <xs:minLength value="1"/>
