@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/Vantiv/payfac-mp-sdk-java.svg?branch=13.x)](https://travis-ci.org/Vantiv/payfac-mp-sdk-java)
 [![codecov](https://codecov.io/gh/Vantiv/payfac-mp-sdk-java/branch/13.x/graph/badge.svg)](https://codecov.io/gh/Vantiv/payfac-mp-sdk-java)
 [ ![Download](https://api.bintray.com/packages/vantivcnp/maven/payfac-mp-sdk-java/images/download.svg) ](https://bintray.com/vantivcnp/maven/payfac-mp-sdk-java/_latestVersion) 
 ![Github All Releases](https://img.shields.io/github/downloads/vantiv/payfac-mp-sdk-java/total.svg)
