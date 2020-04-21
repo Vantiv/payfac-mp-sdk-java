@@ -51,12 +51,26 @@ public class TestPayFacAgreement {
     @Test
     public void testPostByLegalEntity(){
         String expectedRequestUrl = "https://www.testvantivcnp.com/sandbox/payfac/legalentity/201003/agreement";
-        String expectedRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+        String expectedRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                "<legalEntityAgreementCreateRequest xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
+                "<legalEntityAgreement>" +
+                "<legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>" +
+                "<agreementVersion>v1</agreementVersion>" +
+                "<userFullName>fullName</userFullName>" +
+                "<userSystemName>system</userSystemName>" +
+                "<userIPAddress>196.198.100.100</userIPAddress>" +
+                "<manuallyEntered>false</manuallyEntered>" +
+                "<acceptanceDateTime>2014-04-24T11:15:00.000-04:00</acceptanceDateTime>" +
+                "</legalEntityAgreement>" +
+                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<language>java</language>" +
+                "</legalEntityAgreementCreateRequest>";
+        String expectedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<legalEntityAgreementCreateResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
                 "  <transactionId>7662777105</transactionId>\n" +
                 "</legalEntityAgreementCreateResponse>\n";
         Communication mockedCommunication = Mockito.mock(Communication.class);
-        doReturn(expectedRequest).when(mockedCommunication).httpPostRequest("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><legalEntityAgreementCreateRequest xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\"><legalEntityAgreement><legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType><agreementVersion>v1</agreementVersion><userFullName>fullName</userFullName><userSystemName>system</userSystemName><userIPAddress>196.198.100.100</userIPAddress><manuallyEntered>false</manuallyEntered><acceptanceDateTime>2014-04-24T11:15:00.000-04:00</acceptanceDateTime></legalEntityAgreement></legalEntityAgreementCreateRequest>", expectedRequestUrl);
+        doReturn(expectedResponse).when(mockedCommunication).httpPostRequest(expectedRequest, expectedRequestUrl);
         payFacAgreement.setCommunication(mockedCommunication);
         LegalEntityAgreementCreateResponse response = payFacAgreement.postByLegalEntity(201003,legalEntityAgreement);
         assertEquals(7662777105L, response.getTransactionId().longValue());
