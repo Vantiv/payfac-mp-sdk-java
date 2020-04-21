@@ -94,6 +94,8 @@ public class TestPayFacPrincipal {
                 "</address>" +
                 "<stakePercent>31</stakePercent>" +
                 "</principal>" +
+                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<language>java</language>" +
                 "</legalEntityPrincipalCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                 "<principalCreateResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
