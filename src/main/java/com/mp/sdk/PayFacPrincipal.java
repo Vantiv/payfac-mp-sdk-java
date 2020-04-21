@@ -49,10 +49,15 @@ public class PayFacPrincipal {
 
     private PrincipalCreateResponse postPrincipalResponse(String key, String value, String key2, LegalEntityPrincipalCreateRequest request) {
 
-        String principalRequest = XMLConverters.generatePrincipalCreateRequest(request);
-        String suffix = "/" + key + "/" + value + "/" + key2;
+        //setting SDK info in request
+        request.setLanguage(Versions.language);
+        request.setSdkVersion(Versions.sdkVersion);
 
+        String principalRequest = XMLConverters.generatePrincipalCreateRequest(request);
+
+        String suffix = "/" + key + "/" + value + "/" + key2;
         String url = baseUrl + suffix;
+
         PrincipalCreateResponse response = XMLConverters.generatePrincipalCreateResponse(communication.httpPostRequest(principalRequest, url));
         return response;
     }

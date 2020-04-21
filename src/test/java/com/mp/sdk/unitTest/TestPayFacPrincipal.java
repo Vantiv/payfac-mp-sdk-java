@@ -23,7 +23,6 @@ public class TestPayFacPrincipal {
     PayFacPrincipal payFacPrincipal;
     LegalEntityPrincipal principal;
     PrincipalAddress address;
-    Date date = new Date();
     Calendar calendar;
 
     @Before
@@ -38,10 +37,10 @@ public class TestPayFacPrincipal {
         address.setCity("City");
         address.setStateProvince("MA");
         address.setPostalCode("01970");
+        address.setCountryCode("USA");
 
-        date = new Date();
         calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        calendar.set(1997, 4, 10);
 
         principal.setTitle("Mr.");
         principal.setFirstName("First");
@@ -51,20 +50,22 @@ public class TestPayFacPrincipal {
         principal.setAddress(address);
         principal.setContactPhone("11");
         principal.setDateOfBirth(calendar);
+        principal.setStakePercent(31);
     }
 
     @Test
     public void testDeleteLegalEntityByPrincipalId(){
         String expectedRequestUrl = "https://www.testvantivcnp.com/sandbox/payfac/legalentity/2018/principal/9";
-        String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<principalDeleteResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
-                "    <transactionId>4234049185</transactionId>\n" +
-                "    <legalEntityId>2018</legalEntityId>\n" +
-                "    <principalId>9</principalId>\n" +
-                "    <responseDescription>Legal Entity Principal successfully deleted</responseDescription>\n" +
+        String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                "<principalDeleteResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
+                "    <transactionId>4234049185</transactionId>" +
+                "    <legalEntityId>2018</legalEntityId>" +
+                "    <principalId>9</principalId>" +
+                "    <responseDescription>Legal Entity Principal successfully deleted</responseDescription>" +
                 "</principalDeleteResponse>";
         Communication mockedCommunication = Mockito.mock(Communication.class);
-        when(mockedCommunication.httpDeleteRequest(matches(expectedRequestUrl))).thenReturn(mockedResponse);
+        when(mockedCommunication.httpDeleteRequest(expectedRequestUrl)).thenReturn(mockedResponse);
+        payFacPrincipal.setCommunication(mockedCommunication);
         PrincipalDeleteResponse response = payFacPrincipal.deleteLegalEntityByPrincipalId(2018,9);
         assertNotNull(response.getTransactionId());
     }
@@ -72,41 +73,45 @@ public class TestPayFacPrincipal {
     @Test
     public void testPostByLegalEntityID(){
         String expectedRequestUrl = "https://www.testvantivcnp.com/sandbox/payfac/legalentity/2018/principal";
-        String expectedRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<legalEntityPrincipalCreateRequest\n" +
-                "\txmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
-                "\t<principal>\n" +
-                "\t\t<title>Mr.</title>\n" +
-                "\t\t<firstName>First</firstName>\n" +
-                "\t\t<lastName>Last</lastName>\n" +
-                "\t\t<emailAddress>abc@gmail.com</emailAddress>\n" +
-                "\t\t<ssn>123450015</ssn>\n" +
-                "\t\t<dateOfBirth>1980-10-12</dateOfBirth>\n" +
-                "\t\t<address>\n" +
-                "\t\t\t<streetAddress1>p2 street address 1</streetAddress1>\n" +
-                "\t\t\t<streetAddress2>p2 street address 2</streetAddress2>\n" +
-                "\t\t\t<city>Boston2</city>\n" +
-                "\t\t\t<stateProvince>MA</stateProvince>\n" +
-                "\t\t\t<postalCode>01892</postalCode>\n" +
-                "\t\t\t<countryCode>USA</countryCode>\n" +
-                "\t\t</address>\n" +
-                "\t\t<stakePercent>31</stakePercent>\n" +
-                "\t</principal>\n" +
+        String expectedRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                "<legalEntityPrincipalCreateRequest " +
+                "xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
+                "<principal>" +
+                "<title>Mr.</title>" +
+                "<firstName>First</firstName>" +
+                "<lastName>Last</lastName>" +
+                "<emailAddress>abc@gmail.com</emailAddress>" +
+                "<ssn>123450015</ssn>" +
+                "<contactPhone>11</contactPhone>" +
+                "<dateOfBirth>1997-05-10</dateOfBirth>" +
+                "<address>" +
+                "<streetAddress1>Street Address 1</streetAddress1>" +
+                "<streetAddress2>Street Address 2</streetAddress2>" +
+                "<city>City</city>" +
+                "<stateProvince>MA</stateProvince>" +
+                "<postalCode>01970</postalCode>" +
+                "<countryCode>USA</countryCode>" +
+                "</address>" +
+                "<stakePercent>31</stakePercent>" +
+                "</principal>" +
+                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<language>java</language>" +
                 "</legalEntityPrincipalCreateRequest>";
-        String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<principalCreateResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
-                "    <legalEntityId>2018</legalEntityId>\n" +
-                "    <principal>\n" +
-                "        <principalId>4</principalId>\n" +
-                "        <firstName>p first</firstName>\n" +
-                "        <lastName>p last</lastName>\n" +
-                "        <responseCode>10</responseCode>\n" +
-                "        <responseDescription>Approved</responseDescription>\n" +
-                "    </principal>\n" +
-                "    <transactionId>2348770070</transactionId>\n" +
+        String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                "<principalCreateResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
+                "    <legalEntityId>2018</legalEntityId>" +
+                "    <principal>" +
+                "        <principalId>4</principalId>" +
+                "        <firstName>p first</firstName>" +
+                "        <lastName>p last</lastName>" +
+                "        <responseCode>10</responseCode>" +
+                "        <responseDescription>Approved</responseDescription>" +
+                "    </principal>" +
+                "    <transactionId>2348770070</transactionId>" +
                 "</principalCreateResponse>";
         Communication mockedCommunication = Mockito.mock(Communication.class);
-        when(mockedCommunication.httpPostRequest(matches(expectedRequest),matches(expectedRequestUrl))).thenReturn(mockedResponse);
+        when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
+        payFacPrincipal.setCommunication(mockedCommunication);
         PrincipalCreateResponse response = payFacPrincipal.postByLegalEntityID(2018,principal);
         assertNotNull(response.getTransactionId());
     }

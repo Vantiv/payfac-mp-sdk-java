@@ -20,6 +20,10 @@
   <xs:element name="legalEntityUpdateRequest" type="tns:legalEntityUpdateRequest"/>
   
   <xs:element name="legalEntityPrincipalCreateRequest" type="tns:legalEntityPrincipalCreateRequest"/>
+
+  <xs:element name="principalCreateResponse" type="tns:principalCreateResponse"/>
+
+  <xs:element name="legalEntityPrincipalCreateResponseWithResponseFields" type="tns:legalEntityPrincipalCreateResponseWithResponseFields"/>
   
   <xs:element name="legalEntityPrincipalCreateResponse" type="tns:legalEntityPrincipalCreateResponse"/>
   
@@ -46,6 +50,8 @@
   <xs:element name="legalEntityAgreementCreateResponse" type="tns:legalEntityAgreementCreateResponse"/>
 
   <xs:element name="legalEntityAgreementRetrievalResponse" type="tns:legalEntityAgreementRetrievalResponse"/>
+
+  <xs:element name="principalDeleteResponse" type="tns:principalDeleteResponse"/>
   
   <xs:complexType name="legalEntityCreateRequest">
     <xs:sequence>
@@ -1683,4 +1689,77 @@
         </xs:extension>
        </xs:complexContent>
     </xs:complexType>
+
+    <xs:complexType name="legalEntityPrincipalCreateResponseWithResponseFields">
+        <xs:sequence>
+            <xs:element name="principalId" type="xs:int" minOccurs="0"/>
+            <xs:element name="firstName" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="lastName" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="responseCode" type="xs:short" minOccurs="0"/>
+            <xs:element name="responseDescription"  minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="principalCreateResponse">
+        <xs:sequence>
+            <xs:element name="legalEntityId"  minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="19"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="principal" type="tns:legalEntityPrincipalCreateResponseWithResponseFields" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="transactionId" type="xs:long" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="principalDeleteResponse">
+        <xs:sequence>
+            <xs:element name="transactionId" type="xs:long" minOccurs="0"/>
+            <xs:element name="legalEntityId"  minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="19"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="principalId" type="xs:int" minOccurs="0"/>
+            <xs:element name="responseDescription"  minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
 </xs:schema>

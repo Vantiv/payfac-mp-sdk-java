@@ -18,7 +18,6 @@ import com.mp.sdk.SubMerchantECheckFeature;
 import com.mp.sdk.SubMerchantPrimaryContactUpdatable;
 import com.mp.sdk.SubMerchantRetrievalResponse;
 import com.mp.sdk.SubMerchantUpdateRequest;
-import com.mp.sdk.XMLConverters;
 
 public class TestPayFacSubMerchant {
     PayFacSubMerchant payFacSubMerchant;
@@ -184,6 +183,8 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
+                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<subMerchantCreateResponse " +
                 "xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\" duplicate=\"true\">" +
@@ -228,6 +229,8 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
+                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                 "<subMerchantCreateResponse " +
@@ -260,6 +263,8 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
+                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<subMerchantCreateResponse " +
                 "xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\" duplicate=\"true\">" +

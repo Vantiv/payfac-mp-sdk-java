@@ -62,6 +62,11 @@ public class PayFacSubMerchant {
         String suffix = "/" + key + "/" + value + "/" + key2;
 
         String url = baseUrl + suffix;
+
+        //set sdk version info
+        request.setLanguage("java");
+        request.setSdkVersion(Versions.sdkVersion);
+
         String subMerchantRequest = XMLConverters.generateSubMerchantCreateRequest(request);
 
         SubMerchantCreateResponse response = XMLConverters.generateSubMerchantCreateResponse(communication.httpPostRequest(subMerchantRequest, url));

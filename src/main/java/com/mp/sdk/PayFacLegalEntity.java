@@ -51,6 +51,10 @@ public class PayFacLegalEntity {
         String suffix = "/" + key;
         String url = baseUrl + suffix;
 
+        //setting fields capturing sdk usage
+        request.setLanguage(Versions.language);
+        request.setSdkVersion(Versions.sdkVersion);
+
         String legalEntityRequest = XMLConverters.generateLegalEntityCreateRequest(request);
 
         LegalEntityCreateResponse response = XMLConverters.generateCreateResponse(communication.httpPostRequest(legalEntityRequest, url));
