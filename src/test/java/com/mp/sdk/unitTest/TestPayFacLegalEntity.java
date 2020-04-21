@@ -301,6 +301,8 @@ public class TestPayFacLegalEntity {
                 "<stakePercent>33</stakePercent>" +
                 "</principal>" +
                 "<yearsInBusiness>12</yearsInBusiness>" +
+                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<language>java</language>" +
                 "</legalEntityCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                 "<legalEntityCreateResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
