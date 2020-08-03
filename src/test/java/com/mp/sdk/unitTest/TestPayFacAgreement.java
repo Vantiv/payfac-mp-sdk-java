@@ -22,6 +22,8 @@ import com.mp.sdk.LegalEntityAgreementType;
 import com.mp.sdk.PayFacAgreement;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.matches;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -49,26 +51,29 @@ public class TestPayFacAgreement {
     @Test
     public void testPostByLegalEntity(){
         String expectedRequestUrl = "https://www.testvantivcnp.com/sandbox/payfac/legalentity/201003/agreement";
-        String expectedRequest = "<legalEntityAgreementCreateRequest\n" +
-                "\txmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
-                "\t<legalEntityAgreement>\n" +
-                "\t\t<legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
-                "\t\t<agreementVersion>agreementVersion1</agreementVersion>\n" +
-                "\t\t<userFullName>userFullName</userFullName>\n" +
-                "\t\t<userSystemName>systemUserName</userSystemName>\n" +
-                "\t\t<userIPAddress>196.198.100.100</userIPAddress>\n" +
-                "\t\t<manuallyEntered>false</manuallyEntered>\n" +
-                "\t\t<acceptanceDateTime>2017-02-11T12:00:00-06:00</acceptanceDateTime>\n" +
-                "\t</legalEntityAgreement>\n" +
+        String expectedRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                "<legalEntityAgreementCreateRequest xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
+                "<legalEntityAgreement>" +
+                "<legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>" +
+                "<agreementVersion>v1</agreementVersion>" +
+                "<userFullName>fullName</userFullName>" +
+                "<userSystemName>system</userSystemName>" +
+                "<userIPAddress>196.198.100.100</userIPAddress>" +
+                "<manuallyEntered>false</manuallyEntered>" +
+                "<acceptanceDateTime>2014-04-24T11:15:00.000-04:00</acceptanceDateTime>" +
+                "</legalEntityAgreement>" +
+                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<language>java</language>" +
                 "</legalEntityAgreementCreateRequest>";
-        String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+        String expectedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<legalEntityAgreementCreateResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
-                "    <transactionId>0238570470</transactionId>\n" +
-                "</legalEntityAgreementCreateResponse>";
+                "  <transactionId>7662777105</transactionId>\n" +
+                "</legalEntityAgreementCreateResponse>\n";
         Communication mockedCommunication = Mockito.mock(Communication.class);
-        when(mockedCommunication.httpPostRequest(matches(expectedRequest), matches(expectedRequestUrl))).thenReturn(mockedResponse);
+        doReturn(expectedResponse).when(mockedCommunication).httpPostRequest(expectedRequest, expectedRequestUrl);
+        payFacAgreement.setCommunication(mockedCommunication);
         LegalEntityAgreementCreateResponse response = payFacAgreement.postByLegalEntity(201003,legalEntityAgreement);
-        assertNotNull(response.getTransactionId());
+        assertEquals(7662777105L, response.getTransactionId().longValue());
     }
 
     @Test
@@ -76,42 +81,43 @@ public class TestPayFacAgreement {
         String expectedRequestUrl = "https://www.testvantivcnp.com/sandbox/payfac/legalentity/201003/agreement";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<legalEntityAgreementRetrievalResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
-                "    <legalEntityId>201003</legalEntityId>\n" +
-                "    <transactionId>8524972465</transactionId>\n" +
-                "    <agreements>\n" +
-                "        <legalEntityAgreement>\n" +
-                "            <legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
-                "            <agreementVersion>agreementVersion1</agreementVersion>\n" +
-                "            <userFullName>userFullName1</userFullName>\n" +
-                "            <userSystemName>userSystemName1</userSystemName>\n" +
-                "            <userIPAddress>196.198.100.100</userIPAddress>\n" +
-                "            <manuallyEntered>false</manuallyEntered>\n" +
-                "            <acceptanceDateTime>2017-06-11T13:00:00-05:00</acceptanceDateTime>\n" +
-                "        </legalEntityAgreement>\n" +
-                "        <legalEntityAgreement>\n" +
-                "            <legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
-                "            <agreementVersion>agreementVersion2</agreementVersion>\n" +
-                "            <userFullName>userFullName2</userFullName>\n" +
-                "            <userSystemName>userSystemName2</userSystemName>\n" +
-                "            <userIPAddress>196.198.100.100</userIPAddress>\n" +
-                "            <manuallyEntered>false</manuallyEntered>\n" +
-                "            <acceptanceDateTime>2017-06-11T13:00:00-05:00</acceptanceDateTime>\n" +
-                "        </legalEntityAgreement>\n" +
-                "        <legalEntityAgreement>\n" +
-                "            <legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
-                "            <agreementVersion>agreementVersion3</agreementVersion>\n" +
-                "            <userFullName>userFullName3</userFullName>\n" +
-                "            <userSystemName>userSystemName3</userSystemName>\n" +
-                "            <userIPAddress>196.198.100.100</userIPAddress>\n" +
-                "            <manuallyEntered>false</manuallyEntered>\n" +
-                "            <acceptanceDateTime>2017-06-11T13:00:00-05:00</acceptanceDateTime>\n" +
-                "        </legalEntityAgreement>\n" +
-                "    </agreements>\n" +
-                "</legalEntityAgreementRetrievalResponse>";
+                "  <legalEntityId>201003</legalEntityId>\n" +
+                "  <transactionId>0186907222</transactionId>\n" +
+                "  <agreements>\n" +
+                "    <legalEntityAgreement>\n" +
+                "      <legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
+                "      <agreementVersion>agreementVersion1</agreementVersion>\n" +
+                "      <userFullName>userFullName1</userFullName>\n" +
+                "      <userSystemName>userSystemName1</userSystemName>\n" +
+                "      <userIPAddress>196.198.100.100</userIPAddress>\n" +
+                "      <manuallyEntered>false</manuallyEntered>\n" +
+                "      <acceptanceDateTime>2017-06-11T13:00:00-05:00</acceptanceDateTime>\n" +
+                "    </legalEntityAgreement>\n" +
+                "    <legalEntityAgreement>\n" +
+                "      <legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
+                "      <agreementVersion>agreementVersion2</agreementVersion>\n" +
+                "      <userFullName>userFullName2</userFullName>\n" +
+                "      <userSystemName>userSystemName2</userSystemName>\n" +
+                "      <userIPAddress>196.198.100.100</userIPAddress>\n" +
+                "      <manuallyEntered>false</manuallyEntered>\n" +
+                "      <acceptanceDateTime>2017-06-11T13:00:00-05:00</acceptanceDateTime>\n" +
+                "    </legalEntityAgreement>\n" +
+                "    <legalEntityAgreement>\n" +
+                "      <legalEntityAgreementType>MERCHANT_AGREEMENT</legalEntityAgreementType>\n" +
+                "      <agreementVersion>agreementVersion3</agreementVersion>\n" +
+                "      <userFullName>userFullName3</userFullName>\n" +
+                "      <userSystemName>userSystemName3</userSystemName>\n" +
+                "      <userIPAddress>196.198.100.100</userIPAddress>\n" +
+                "      <manuallyEntered>false</manuallyEntered>\n" +
+                "      <acceptanceDateTime>2017-06-11T13:00:00-05:00</acceptanceDateTime>\n" +
+                "    </legalEntityAgreement>\n" +
+                "  </agreements>\n" +
+                "</legalEntityAgreementRetrievalResponse>\n";
         Communication mockedCommunication = Mockito.mock(Communication.class);
-        when(mockedCommunication.httpGetRequest(matches(expectedRequestUrl))).thenReturn(mockedResponse);
+        doReturn(mockedResponse).when(mockedCommunication).httpGetRequest(expectedRequestUrl);
+        payFacAgreement.setCommunication(mockedCommunication);
         LegalEntityAgreementRetrievalResponse response = payFacAgreement.getByLegalEntity(201003);
-        assertNotNull(response.getTransactionId());
+        assertEquals("201003", response.getLegalEntityId());
     }
 
 

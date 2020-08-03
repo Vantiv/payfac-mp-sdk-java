@@ -39,6 +39,9 @@ public class PayFacAgreement {
 
     private LegalEntityAgreementCreateResponse postAgreementResponse(String key, String value, String key2, LegalEntityAgreementCreateRequest request) {
 
+        request.setLanguage(Versions.language);
+        request.setSdkVersion(Versions.sdkVersion);
+
         String agreementRequest = XMLConverters.generateAgreementCreateRequest(request);
         String suffix = "/" + key + "/" + value + "/" + key2;
 
