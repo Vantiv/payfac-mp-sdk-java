@@ -1,4 +1,4 @@
-group 'com.worldpay'
+group 'io.github.vantiv'
 version JAR_VERSION
 
 apply plugin : 'eclipse'
@@ -89,7 +89,7 @@ task generateJaxbClasses() {
 
     doLast {
         ant.taskdef(name: "xjc", classname:"com.sun.tools.xjc.XJCTask", classpath:configurations.generateJAXB.asPath)
-        ant.xjc(destdir:"${generatedDir}", package: "com.mp.sdk", binding:bindingsFile, extension:'true'){
+        ant.xjc(destdir:"${generatedDir}", package: "io.github.vantiv.mp.sdk", binding:bindingsFile, extension:'true'){
             schema(dir:"src/main/xsd/", includes:"merchant-onboard-api-v${SCHEMA_VERSION}.xsd")
         }
     }
@@ -159,7 +159,7 @@ publishing {
                 name = 'mp-sdk-for-java'
                 description = 'Vantiv eCommerce Java SDK is a Java implementation of the Vantiv Payfac XML API'
                 url = 'https://github.com/Vantiv/payfac-mp-sdk-java'
-                groupId = 'com.worldpay'
+                groupId = 'io.github.vantiv'
                 artifactId = "${JAR_NAME}"
                 version = "${JAR_VERSION}"
 
