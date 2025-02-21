@@ -301,7 +301,7 @@ public class TestPayFacLegalEntity {
                 "<stakePercent>33</stakePercent>" +
                 "</principal>" +
                 "<yearsInBusiness>12</yearsInBusiness>" +
-                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<sdkVersion>14.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</legalEntityCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
@@ -416,7 +416,7 @@ public class TestPayFacLegalEntity {
                 "        <lastName>p_last</lastName>" +
                 "    </principal>" +
                 "</legalEntityCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacLegalEntity.setCommunication(mockedCommunication);
         LegalEntityCreateResponse response = payFacLegalEntity.postByLegalEntity(createRequest);

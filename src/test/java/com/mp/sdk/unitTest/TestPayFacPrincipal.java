@@ -1,17 +1,14 @@
 package com.mp.sdk.unitTest;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.matches;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.mp.sdk.ApprovedMccResponse;
 import com.mp.sdk.Communication;
 import com.mp.sdk.LegalEntityPrincipal;
 import com.mp.sdk.PayFacPrincipal;
@@ -94,7 +91,7 @@ public class TestPayFacPrincipal {
                 "</address>" +
                 "<stakePercent>31</stakePercent>" +
                 "</principal>" +
-                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<sdkVersion>14.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</legalEntityPrincipalCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
@@ -109,7 +106,7 @@ public class TestPayFacPrincipal {
                 "    </principal>" +
                 "    <transactionId>2348770070</transactionId>" +
                 "</principalCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacPrincipal.setCommunication(mockedCommunication);
         PrincipalCreateResponse response = payFacPrincipal.postByLegalEntityID(2018,principal);

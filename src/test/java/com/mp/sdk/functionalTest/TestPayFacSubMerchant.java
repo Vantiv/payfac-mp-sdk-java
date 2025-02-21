@@ -37,6 +37,10 @@ public class TestPayFacSubMerchant {
     String bankAccountNumber;
     String pspMerchantId;
     String settlementCurrency;
+    SubMerchantCreateRequest.MerchantCategoryTypes categoryType;
+    SubMerchantUpdateRequest.MerchantCategoryTypes updateCategoryType;
+    SubMerchantUpdateRequest.MethodOfPayments.Method method;
+    SubMerchantUpdateRequest.MethodOfPayments methodOfPayments;
     SubMerchantUpdateRequest updateRequest;
     AddressUpdatable address;
     SubMerchantPrimaryContactUpdatable primaryContactUpdatable;
@@ -61,6 +65,9 @@ public class TestPayFacSubMerchant {
         bankAccountNumber = "1234";
         pspMerchantId = "112";
         settlementCurrency = "123";
+        categoryType = new SubMerchantCreateRequest.MerchantCategoryTypes();
+        categoryType.getCategoryTypes().add("SM");
+       // categoryType.getCategoryTypes().add("CLEAR");
 
         request.setMerchantName(name);
         request.setUrl(url);
@@ -72,6 +79,7 @@ public class TestPayFacSubMerchant {
         request.setBankAccountNumber(bankAccountNumber);
         request.setPspMerchantId(pspMerchantId);
         request.setSettlementCurrency(settlementCurrency);
+        request.setMerchantCategoryTypes(categoryType);
 
         address = new AddressUpdatable();
         address.setStreetAddress1("Street Address 1");
@@ -84,9 +92,17 @@ public class TestPayFacSubMerchant {
         primaryContactUpdatable.setFirstName("John");
         primaryContactUpdatable.setLastName("Doe");
         primaryContactUpdatable.setPhone("9785552222");
+        method = new SubMerchantUpdateRequest.MethodOfPayments.Method();
+        methodOfPayments = new SubMerchantUpdateRequest.MethodOfPayments();
+        method.setPaymentType("VISA");
+        // method.setAllowedTransactionTypes("NONE");
+        method.setSelectedTransactionType("DEPOSITS_ONLY");
+        methodOfPayments.getMethods().add(method);
 
         eCheckFeature = new SubMerchantECheckFeature();
         eCheckFeature.setECheckBillingDescriptor("9785552222");
+        updateCategoryType = new SubMerchantUpdateRequest.MerchantCategoryTypes();
+        updateCategoryType.getCategoryTypes().add("GC");
 
         updateRequest.setAmexMid("1234567890");
         updateRequest.setDiscoverConveyedMid("123456789012345");
@@ -101,6 +117,8 @@ public class TestPayFacSubMerchant {
         updateRequest.setAddress(address);
         updateRequest.setPrimaryContact(primaryContactUpdatable);
         updateRequest.setECheck(eCheckFeature);
+        updateRequest.setMerchantCategoryTypes(updateCategoryType);
+        updateRequest.setMethodOfPayments(methodOfPayments);
 
     }
 

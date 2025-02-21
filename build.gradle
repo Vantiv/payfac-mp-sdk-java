@@ -3,7 +3,7 @@ version JAR_VERSION
 
 apply plugin : 'eclipse'
 apply plugin : 'java'
-apply plugin : 'maven'
+apply plugin : 'maven-publish'
 apply plugin : 'jacoco'
 
 
@@ -19,7 +19,7 @@ configurations {
 }
 
 jacocoTestReport {
-    executionData = fileTree(dir:"${buildDir}/jacoco/", include:"*.exec")
+    executionData(fileTree(dir:"${buildDir}/jacoco/", include:"*.exec"))
     reports {
         xml.enabled true
         html.enabled true
@@ -37,15 +37,16 @@ sourceSets {
 
 
 dependencies {
-    compile group:'com.jcraft', name:'jsch', version:'0.1.54'
-    compile group:'commons-io', name:'commons-io', version:'2.5'
-    compile group:'org.apache.httpcomponents', name:'httpclient', version:'4.5.2'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.1'
+    implementation  group:'com.jcraft', name:'jsch', version:'0.1.54'
+    implementation  group:'commons-io', name:'commons-io', version:'2.5'
+    implementation  group:'org.apache.httpcomponents', name:'httpclient', version:'4.5.2'
+    //implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.2.1'
+    testImplementation  group: 'junit', name: 'junit', version: '4.12'
+    implementation  group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.1'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-core', version:'2.2.7'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-impl', version:'2.2.5-5'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-xjc', version:'2.2.5'
-    testCompile 'org.mockito:mockito-core:2.8.9'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
 }
 
 
@@ -59,8 +60,10 @@ jar{
     manifest {
         attributes("Implementation-Title":"Payfac Merchant Provisioner SDK For Java 1.5 and greater", "Implementation-Version":"${JAR_VERSION}","Implementation-Vendor":"worldpay","Main-Class":"com.cnp.sdk.Setup")
     }
-    destinationDir = file("${buildDir}/libs")
-    archiveName = "${JAR_NAME}-${JAR_VERSION}.jar"
+
+    getDestinationDirectory().set(file("${buildDir}/lib"))
+
+    getArchiveFileName().set("${JAR_NAME}-${JAR_VERSION}.jar")
 }
 
 
@@ -95,8 +98,8 @@ task generateJaxbClasses() {
 
 task sourceJar(type:Jar) {
     dependsOn generateJaxbClasses
-    destinationDir = file("${buildDir}/libs")
-    classifier = 'sources'
+    getDestinationDirectory().set(file("${buildDir}/libs"))
+    getArchiveClassifier().set('sources')
     from "src/main/java"
     from generateJaxbClasses.generatedDir
 }
@@ -112,7 +115,7 @@ task copyJarsToKit(type:Copy, dependsOn:[check,jar,sourceJar]){
 }
 
 task copyLibsToKit(type:Copy, dependsOn:check){
-    from configurations.compile.asFileTree.matching{
+    from configurations.runtimeClasspath.asFileTree.matching{
         include '**/commons-io*'
         include '**/commons-codec*'
         include '**/httpclient*'
@@ -125,14 +128,14 @@ task copyLibsToKit(type:Copy, dependsOn:check){
 
 task tarKit(type:Tar, dependsOn:[copyJarsToKit, copyLibsToKit]){
     compression = Compression.GZIP
-    destinationDir = file("$buildDir/${DIST_DIR}")
-    archiveName = "${JAR_NAME}-${JAR_VERSION}.tar.gz"
+    getDestinationDirectory().set(file("$buildDir/${DIST_DIR}"))
+    getArchiveFileName().set("${JAR_NAME}-${JAR_VERSION}.tar.gz")
     from "$buildDir/${RELEASE_ARTIFACTS_DIR}"
 }
 
 task zipKit(type:Zip, dependsOn:[copyJarsToKit, copyLibsToKit]){
-    destinationDir = file("$buildDir/${DIST_DIR}")
-    archiveName = "${JAR_NAME}-${JAR_VERSION}.zip"
+    getDestinationDirectory().set(file("$buildDir/${DIST_DIR}"))
+    getArchiveFileName().set("${JAR_NAME}-${JAR_VERSION}.zip")
     from "$buildDir/${RELEASE_ARTIFACTS_DIR}"
 }
 
@@ -147,14 +150,45 @@ task kit(dependsOn:[tarKit, zipKit]){
     dependsOn javadoc
 }
 
-task writeNewPom(type:Copy) {
-    build.dependsOn it
-    pom {
-        project {
-            modelVersion '4.0.0'
-            groupId 'com.worldpay'
-            artifactId "${JAR_NAME}"
-            version "${JAR_VERSION}"
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            pom {
+                name = 'mp-sdk-for-java'
+                description = 'Vantiv eCommerce Java SDK is a Java implementation of the Vantiv Payfac XML API'
+                url = 'https://github.com/Vantiv/payfac-mp-sdk-java'
+                groupId = 'com.worldpay'
+                artifactId = "${JAR_NAME}"
+                version = "${JAR_VERSION}"
+
+                licenses {
+                    license {
+                        name = 'License'
+                        url = 'https://github.com/Vantiv/payfac-mp-sdk-java/blob/13.x/LICENSE'
+                    }
+                }
+                developers{
+                    developer{
+                        id = 'vantivSDKSupport'
+                        name = 'VantivSDKSupport'
+                        email = 'sdksupport@worldpay.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:github.com/Vantiv/payfac-mp-sdk-for-java.git'
+                    developerConnection = 'scm:git:ssh://github.com/Vantiv/payfac-mp-sdk-for-java.git'
+                    url = 'https://github.com/Vantiv/payfac-mp-sdk-java.git'
+                }
+            }
         }
-    }.writeTo("$buildDir/${RELEASE_ARTIFACTS_DIR}/${JAR_NAME}-${JAR_VERSION}.pom")
+    }
+}
+
+model {
+    tasks.generatePomFileForMavenPublication {
+        build.dependsOn it
+        destination = file("$buildDir/kit/payfac-mp-sdk-for-java-${JAR_VERSION}.pom")
+    }
 }

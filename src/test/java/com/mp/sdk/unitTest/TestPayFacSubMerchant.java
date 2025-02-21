@@ -36,7 +36,10 @@ public class TestPayFacSubMerchant {
     AddressUpdatable address;
     SubMerchantPrimaryContactUpdatable primaryContactUpdatable;
     SubMerchantECheckFeature eCheckFeature;
-
+    SubMerchantCreateRequest.MerchantCategoryTypes categoryType;
+    SubMerchantUpdateRequest.MerchantCategoryTypes updateCategoryType;
+    SubMerchantUpdateRequest.MethodOfPayments.Method method;
+    SubMerchantUpdateRequest.MethodOfPayments methodOfPayments;
     @Before
     public void setUp(){
         payFacSubMerchant = new PayFacSubMerchant();
@@ -51,6 +54,9 @@ public class TestPayFacSubMerchant {
         bankAccountNumber = "1234";
         pspMerchantId = "112";
         settlementCurrency = "USD";
+        categoryType = new SubMerchantCreateRequest.MerchantCategoryTypes();
+        categoryType.getCategoryTypes().add("GC");
+
         request = new SubMerchantCreateRequest();
         request.setMerchantName(name);
         request.setUrl(url);
@@ -62,6 +68,7 @@ public class TestPayFacSubMerchant {
         request.setBankAccountNumber(bankAccountNumber);
         request.setPspMerchantId(pspMerchantId);
         request.setSettlementCurrency(settlementCurrency);
+        request.setMerchantCategoryTypes(categoryType);
 
         address = new AddressUpdatable();
         address.setStreetAddress1("Street Address 1");
@@ -75,8 +82,19 @@ public class TestPayFacSubMerchant {
         primaryContactUpdatable.setLastName("Doe");
         primaryContactUpdatable.setPhone("9785552222");
 
+
+
         eCheckFeature = new SubMerchantECheckFeature();
         eCheckFeature.setECheckBillingDescriptor("9785552222");
+        updateCategoryType = new SubMerchantUpdateRequest.MerchantCategoryTypes();
+        updateCategoryType.getCategoryTypes().add("GC");
+        method = new SubMerchantUpdateRequest.MethodOfPayments.Method();
+        methodOfPayments = new SubMerchantUpdateRequest.MethodOfPayments();
+        method.setPaymentType("VISA");
+        // method.setAllowedTransactionTypes("NONE");
+        method.setSelectedTransactionType("NONE");
+        methodOfPayments.getMethods().add(method);
+
         updateRequest = new SubMerchantUpdateRequest();
         updateRequest.setAmexMid("1234567890");
         updateRequest.setDiscoverConveyedMid("123456789012345");
@@ -91,6 +109,8 @@ public class TestPayFacSubMerchant {
         updateRequest.setAddress(address);
         updateRequest.setPrimaryContact(primaryContactUpdatable);
         updateRequest.setECheck(eCheckFeature);
+        updateRequest.setMerchantCategoryTypes(updateCategoryType);
+        updateRequest.setMethodOfPayments(methodOfPayments);
     }
 
     @Test
@@ -183,7 +203,10 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
-                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<merchantCategoryTypes>" +
+                "<categoryType>GC</categoryType>" +
+                "</merchantCategoryTypes>" +
+                "<sdkVersion>14.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<subMerchantCreateResponse " +
@@ -205,7 +228,7 @@ public class TestPayFacSubMerchant {
                 "<merchantIdentString>01100002</merchantIdentString>" +
                 "</originalSubMerchant>" +
                 "</subMerchantCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacSubMerchant.setCommunication(mockedCommunication);
         SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchant(2018,request);
@@ -229,7 +252,7 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
-                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<sdkVersion>14.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
@@ -239,7 +262,7 @@ public class TestPayFacSubMerchant {
                 "<subMerchantId>1100003</subMerchantId>" +
                 "<merchantIdentString>01100003</merchantIdentString>" +
                 "</subMerchantCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacSubMerchant.setCommunication(mockedCommunication);
         SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchantWithDuplicateAll(2018,request);
@@ -263,7 +286,7 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
-                "<sdkVersion>13.1.0</sdkVersion>" +
+                "<sdkVersion>14.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<subMerchantCreateResponse " +
@@ -300,7 +323,7 @@ public class TestPayFacSubMerchant {
                 "<merchantIdentString>01100002</merchantIdentString>" +
                 "</originalSubMerchant>" +
                 "</subMerchantCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacSubMerchant.setCommunication(mockedCommunication);
         SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchantWithDuplicateNotAll(2018,request);
@@ -338,6 +361,15 @@ public class TestPayFacSubMerchant {
                 "<eCheck>" +
                 "<eCheckBillingDescriptor>9785552222</eCheckBillingDescriptor>" +
                 "</eCheck>" +
+                "<merchantCategoryTypes>" +
+                "<categoryType>GC</categoryType>"+
+                "</merchantCategoryTypes>"+
+                "<methodOfPayments>"+
+                "<method>"+
+                "<paymentType>VISA</paymentType>"+
+                "<selectedTransactionType>NONE</selectedTransactionType>"+
+                "</method>"+
+                "</methodOfPayments>"+
                 "</subMerchantUpdateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                 "<response xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
@@ -345,7 +377,7 @@ public class TestPayFacSubMerchant {
                 "</response>";
 
 
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPutRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacSubMerchant.setCommunication(mockedCommunication);
 
