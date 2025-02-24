@@ -6,11 +6,11 @@
 
     <jaxb:globalBindings generateElementProperty="false">
         <jaxb:javaType name="java.util.Calendar" xmlType="xs:date"
-                       parseMethod="com.mp.sdk.JAXBConverters.parseDate" printMethod="com.mp.sdk.JAXBConverters.printDate" />
+                       parseMethod="io.github.vantiv.mp.sdk.JAXBConverters.parseDate" printMethod="io.github.vantiv.mp.sdk.JAXBConverters.printDate" />
         <jaxb:javaType name="java.lang.Long" xmlType="xs:long"
-                       parseMethod="com.mp.sdk.JAXBConverters.parseLong" printMethod="com.mp.sdk.JAXBConverters.printLong" />
+                       parseMethod="io.github.vantiv.mp.sdk.JAXBConverters.parseLong" printMethod="io.github.vantiv.mp.sdk.JAXBConverters.printLong" />
         <jaxb:javaType name="java.lang.String" xmlType="xs:string"
-                       parseMethod="com.mp.sdk.JAXBConverters.parseString" printMethod="com.mp.sdk.JAXBConverters.printString" />
+                       parseMethod="io.github.vantiv.mp.sdk.JAXBConverters.parseString" printMethod="io.github.vantiv.mp.sdk.JAXBConverters.printString" />
         <xjc:simple />
     </jaxb:globalBindings>
 

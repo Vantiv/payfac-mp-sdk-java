@@ -31,16 +31,16 @@ None.
     1. For Maven:
         ```xml
             <dependency>
-              <groupId>com.worldpay</groupId>
+              <groupId>io.github.vantiv</groupId>
               <artifactId>payfac-mp-sdk-java</artifactId>
-              <version>13.0.0</version>
+              <version>14.0.0</version>
               <type>pom</type>
             </dependency>
         ```
 
     2. For Gradle:
         ```groovy
-            compile 'com.worldpay:payfac-mp-sdk-java:13.0.0'
+            compile 'io.github.vantiv:payfac-mp-sdk-java:14.0.0'
         ```
 3. Create your configuration file with one of the following
     * Run `java -jar /path/to/payfac-mp-sdk-java-X.X.X.jar` and answer the questions, or
@@ -53,10 +53,10 @@ List of configuration parameters along with their values can be found [here](htt
 ## Usage example
 
 ```java
-import com.mp.sdk.ApprovedMccResponse;
-import com.mp.sdk.Communication;
-import com.mp.sdk.Configuration;
-import com.mp.sdk.PayFacMcc;
+import io.github.vantiv.mp.sdk.ApprovedMccResponse;
+import io.github.vantiv.mp.sdk.Communication;
+import io.github.vantiv.mp.sdk.Configuration;
+import io.github.vantiv.mp.sdk.PayFacMcc;
 
 public class SamplePayFacRequest {
 
