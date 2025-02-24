@@ -166,7 +166,7 @@ publishing {
                 licenses {
                     license {
                         name = 'License'
-                        url = 'https://github.com/Vantiv/payfac-mp-sdk-java/blob/13.x/LICENSE'
+                        url = 'https://github.com/Vantiv/payfac-mp-sdk-java/blob/14.x/LICENSE'
                     }
                 }
                 developers{

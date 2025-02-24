@@ -300,7 +300,7 @@ public class TestPayFacLegalEntity {
                 "<stakePercent>33</stakePercent>" +
                 "</principal>" +
                 "<yearsInBusiness>12</yearsInBusiness>" +
-                "<sdkVersion>14.0</sdkVersion>" +
+                "<sdkVersion>14.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</legalEntityCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +

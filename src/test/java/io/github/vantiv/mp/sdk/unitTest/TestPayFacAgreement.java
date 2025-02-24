@@ -61,7 +61,7 @@ public class TestPayFacAgreement {
                 "<manuallyEntered>false</manuallyEntered>" +
                 "<acceptanceDateTime>2014-04-24T11:15:00.000-04:00</acceptanceDateTime>" +
                 "</legalEntityAgreement>" +
-                "<sdkVersion>14.0</sdkVersion>" +
+                "<sdkVersion>14.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</legalEntityAgreementCreateRequest>";
         String expectedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +

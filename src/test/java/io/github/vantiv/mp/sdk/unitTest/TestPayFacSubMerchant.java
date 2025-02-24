@@ -206,7 +206,7 @@ public class TestPayFacSubMerchant {
                 "<merchantCategoryTypes>" +
                 "<categoryType>GC</categoryType>" +
                 "</merchantCategoryTypes>" +
-                "<sdkVersion>14.0</sdkVersion>" +
+                "<sdkVersion>14.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<subMerchantCreateResponse " +
@@ -252,7 +252,7 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
-                "<sdkVersion>14.0</sdkVersion>" +
+                "<sdkVersion>14.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
@@ -286,7 +286,7 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
-                "<sdkVersion>14.0</sdkVersion>" +
+                "<sdkVersion>14.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<subMerchantCreateResponse " +

@@ -91,7 +91,7 @@ public class TestPayFacPrincipal {
                 "</address>" +
                 "<stakePercent>31</stakePercent>" +
                 "</principal>" +
-                "<sdkVersion>14.0</sdkVersion>" +
+                "<sdkVersion>14.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</legalEntityPrincipalCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
