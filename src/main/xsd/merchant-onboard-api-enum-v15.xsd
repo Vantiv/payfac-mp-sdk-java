@@ -220,5 +220,20 @@
             <xs:enumeration value="PRIVATE"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="pciLevelScore">
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="complianceProductCode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SAFERPAYMENT"/>
+            <xs:enumeration value="OTHER"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

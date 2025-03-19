@@ -26,7 +26,7 @@ public class TestPayFacMcc {
                 "        <approvedMcc>5970</approvedMcc>\n" +
                 "    </approvedMccs>\n" +
                 "</approvedMccResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         doReturn("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<approvedMccResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
                 "  <transactionId>5264410268</transactionId>\n" +
@@ -35,7 +35,7 @@ public class TestPayFacMcc {
                 "    <approvedMcc>5970</approvedMcc>\n" +
                 "  </approvedMccs>\n" +
                 "</approvedMccResponse>\n").when(mockedCommunication).httpGetRequest("https://www.testvantivcnp.com/sandbox/payfac/mcc");
-        //when(mockedCommunication.httpGetRequest(matches(expectedRequestUrl))).thenReturn(mockedResponse);
+        doReturn(mockedResponse).when(mockedCommunication).httpGetRequest(matches(expectedRequestUrl));
         payFacMcc.setCommunication(mockedCommunication);
         ApprovedMccResponse response = payFacMcc.getMcc();
         assertNotNull(response.getApprovedMccs().getApprovedMccs());

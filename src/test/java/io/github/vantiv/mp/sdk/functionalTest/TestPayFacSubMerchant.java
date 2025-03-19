@@ -2,21 +2,10 @@ package io.github.vantiv.mp.sdk.functionalTest;
 
 import java.util.Properties;
 
+import io.github.vantiv.mp.sdk.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import io.github.vantiv.mp.sdk.AddressUpdatable;
-import io.github.vantiv.mp.sdk.Communication;
-import io.github.vantiv.mp.sdk.Configuration;
-import io.github.vantiv.mp.sdk.PayFacSubMerchant;
-import io.github.vantiv.mp.sdk.Response;
-import io.github.vantiv.mp.sdk.SubMerchantCreateRequest;
-import io.github.vantiv.mp.sdk.SubMerchantCreateResponse;
-import io.github.vantiv.mp.sdk.SubMerchantECheckFeature;
-import io.github.vantiv.mp.sdk.SubMerchantPrimaryContactUpdatable;
-import io.github.vantiv.mp.sdk.SubMerchantRetrievalResponse;
-import io.github.vantiv.mp.sdk.SubMerchantUpdateRequest;
 
 public class TestPayFacSubMerchant {
     PayFacSubMerchant payFacSubMerchant;
@@ -36,6 +25,9 @@ public class TestPayFacSubMerchant {
     String pspMerchantId;
     String settlementCurrency;
     SubMerchantCreateRequest.MerchantCategoryTypes categoryType;
+    SubMerchantRevenueBoostFeature revenueBoostFeature;
+    ComplianceProducts.Product product;
+    ComplianceProducts complianceProducts;
     SubMerchantUpdateRequest.MerchantCategoryTypes updateCategoryType;
     SubMerchantUpdateRequest.MethodOfPayments.Method method;
     SubMerchantUpdateRequest.MethodOfPayments methodOfPayments;
@@ -58,14 +50,24 @@ public class TestPayFacSubMerchant {
         customerServiceNumber = "11";
         hardCodedBillingDescriptor = "aaa";
         maxTransactionAmount = 123;
-        merchantCategoryCOde = "2";
+        merchantCategoryCOde = "9222";
         bankRoutingNumber = "123";
         bankAccountNumber = "1234";
         pspMerchantId = "112";
         settlementCurrency = "123";
         categoryType = new SubMerchantCreateRequest.MerchantCategoryTypes();
-        categoryType.getCategoryTypes().add("SM");
+        categoryType.getCategoryTypes().add("GC");
        // categoryType.getCategoryTypes().add("CLEAR");
+
+        revenueBoostFeature = new SubMerchantRevenueBoostFeature();
+        revenueBoostFeature.setEnabled(true);
+
+        product = new ComplianceProducts.Product();
+        complianceProducts = new ComplianceProducts();
+        product.setCode(ComplianceProductCode.SAFERPAYMENT);
+        product.setName("Safer Payment Name");
+        product.setActive(true);
+        complianceProducts.getProducts().add(product);
 
         request.setMerchantName(name);
         request.setUrl(url);
@@ -78,6 +80,9 @@ public class TestPayFacSubMerchant {
         request.setPspMerchantId(pspMerchantId);
         request.setSettlementCurrency(settlementCurrency);
         request.setMerchantCategoryTypes(categoryType);
+        request.setCountryOfOrigin("CAN");
+        request.setRevenueBoost(revenueBoostFeature);
+        request.setComplianceProducts(complianceProducts);
 
         address = new AddressUpdatable();
         address.setStreetAddress1("Street Address 1");
@@ -117,6 +122,9 @@ public class TestPayFacSubMerchant {
         updateRequest.setECheck(eCheckFeature);
         updateRequest.setMerchantCategoryTypes(updateCategoryType);
         updateRequest.setMethodOfPayments(methodOfPayments);
+        updateRequest.setCountryOfOrigin("CAN");
+        updateRequest.setRevenueBoost(revenueBoostFeature);
+        updateRequest.setComplianceProducts(complianceProducts);
 
     }
 

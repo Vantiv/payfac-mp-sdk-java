@@ -4,20 +4,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.Mockito.when;
 
+import io.github.vantiv.mp.sdk.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import io.github.vantiv.mp.sdk.AddressUpdatable;
-import io.github.vantiv.mp.sdk.Communication;
-import io.github.vantiv.mp.sdk.PayFacSubMerchant;
-import io.github.vantiv.mp.sdk.Response;
-import io.github.vantiv.mp.sdk.SubMerchantCreateRequest;
-import io.github.vantiv.mp.sdk.SubMerchantCreateResponse;
-import io.github.vantiv.mp.sdk.SubMerchantECheckFeature;
-import io.github.vantiv.mp.sdk.SubMerchantPrimaryContactUpdatable;
-import io.github.vantiv.mp.sdk.SubMerchantRetrievalResponse;
-import io.github.vantiv.mp.sdk.SubMerchantUpdateRequest;
 
 public class TestPayFacSubMerchant {
     PayFacSubMerchant payFacSubMerchant;
@@ -40,6 +30,9 @@ public class TestPayFacSubMerchant {
     SubMerchantUpdateRequest.MerchantCategoryTypes updateCategoryType;
     SubMerchantUpdateRequest.MethodOfPayments.Method method;
     SubMerchantUpdateRequest.MethodOfPayments methodOfPayments;
+    SubMerchantRevenueBoostFeature revenueBoostFeature;
+    ComplianceProducts.Product product;
+    ComplianceProducts complianceProducts;
     @Before
     public void setUp(){
         payFacSubMerchant = new PayFacSubMerchant();
@@ -49,13 +42,23 @@ public class TestPayFacSubMerchant {
         customerServiceNumber = "11";
         hardCodedBillingDescriptor = "aaa";
         maxTransactionAmount = 123;
-        merchantCategoryCOde = "2";
+        merchantCategoryCOde = "9222";
         bankRoutingNumber = "123";
         bankAccountNumber = "1234";
         pspMerchantId = "112";
         settlementCurrency = "USD";
         categoryType = new SubMerchantCreateRequest.MerchantCategoryTypes();
         categoryType.getCategoryTypes().add("GC");
+
+        revenueBoostFeature = new SubMerchantRevenueBoostFeature();
+        revenueBoostFeature.setEnabled(true);
+
+        product = new ComplianceProducts.Product();
+        complianceProducts = new ComplianceProducts();
+        product.setCode(ComplianceProductCode.SAFERPAYMENT);
+        product.setName("Safer Payment Name");
+        product.setActive(true);
+        complianceProducts.getProducts().add(product);
 
         request = new SubMerchantCreateRequest();
         request.setMerchantName(name);
@@ -69,6 +72,9 @@ public class TestPayFacSubMerchant {
         request.setPspMerchantId(pspMerchantId);
         request.setSettlementCurrency(settlementCurrency);
         request.setMerchantCategoryTypes(categoryType);
+        request.setCountryOfOrigin("CAN");
+        request.setRevenueBoost(revenueBoostFeature);
+        request.setComplianceProducts(complianceProducts);
 
         address = new AddressUpdatable();
         address.setStreetAddress1("Street Address 1");
@@ -111,6 +117,9 @@ public class TestPayFacSubMerchant {
         updateRequest.setECheck(eCheckFeature);
         updateRequest.setMerchantCategoryTypes(updateCategoryType);
         updateRequest.setMethodOfPayments(methodOfPayments);
+        updateRequest.setCountryOfOrigin("CAN");
+        updateRequest.setRevenueBoost(revenueBoostFeature);
+        updateRequest.setComplianceProducts(complianceProducts);
     }
 
     @Test
@@ -179,8 +188,8 @@ public class TestPayFacSubMerchant {
                 "    </paypageCredentials>" +
                 "    <updateDate>2017-09-30T11:18:23.127-04:00</updateDate>" +
                 "</subMerchantRetrievalResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
-        when(mockedCommunication.httpGetRequest(matches(expectedRequestUrl))).thenReturn(mockedResponse);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
+       // when(mockedCommunication.httpGetRequest(matches(expectedRequestUrl))).thenReturn(mockedResponse);
         payFacSubMerchant.setCommunication(mockedCommunication);
         SubMerchantRetrievalResponse response = payFacSubMerchant.getBySubMerchantId(2018,123456);
         assertNotNull(response.getTransactionId());
@@ -198,7 +207,7 @@ public class TestPayFacSubMerchant {
                 "<hardCodedBillingDescriptor>aaa" +
                 "</hardCodedBillingDescriptor>" +
                 "<maxTransactionAmount>123</maxTransactionAmount>" +
-                "<merchantCategoryCode>2</merchantCategoryCode>" +
+                "<merchantCategoryCode>9222</merchantCategoryCode>" +
                 "<bankRoutingNumber>123</bankRoutingNumber>" +
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
@@ -206,7 +215,15 @@ public class TestPayFacSubMerchant {
                 "<merchantCategoryTypes>" +
                 "<categoryType>GC</categoryType>" +
                 "</merchantCategoryTypes>" +
-                "<sdkVersion>14.0.0</sdkVersion>" +
+                "<countryOfOrigin>CAN</countryOfOrigin>" +
+                "<complianceProducts>"+
+                "<product>"+
+                "<code>SAFERPAYMENT</code>"+
+                "<name>Safer Payment Name</name>"+
+                "<active>true</active>"+
+                "</product>"+
+                "</complianceProducts>"+
+                "<sdkVersion>15.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<subMerchantCreateResponse " +
@@ -252,7 +269,7 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
-                "<sdkVersion>14.0.0</sdkVersion>" +
+                "<sdkVersion>15.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
@@ -286,7 +303,7 @@ public class TestPayFacSubMerchant {
                 "<bankAccountNumber>1234</bankAccountNumber>" +
                 "<pspMerchantId>112</pspMerchantId>" +
                 "<settlementCurrency>USD</settlementCurrency>" +
-                "<sdkVersion>14.0.0</sdkVersion>" +
+                "<sdkVersion>15.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</subMerchantCreateRequest>";
         String mockedResponse = "<subMerchantCreateResponse " +
@@ -370,6 +387,13 @@ public class TestPayFacSubMerchant {
                 "<selectedTransactionType>NONE</selectedTransactionType>"+
                 "</method>"+
                 "</methodOfPayments>"+
+                "<complianceProducts>"+
+                "<product>"+
+                    "<code>SAFERPAYMENT</code>"+
+                    "<name>Safer Payment Name</name>"+
+                    "<active>true</active>"+
+                "</product>"+
+                "</complianceProducts>"+
                 "</subMerchantUpdateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                 "<response xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +

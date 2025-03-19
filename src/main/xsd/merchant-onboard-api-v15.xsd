@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema elementFormDefault="qualified" version="1.0" targetNamespace="http://payfac.vantivcnp.com/api/merchant/onboard" xmlns:tns="http://payfac.vantivcnp.com/api/merchant/onboard" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:include schemaLocation="merchant-onboard-api-enum-v14.xsd" />
+  <xs:include schemaLocation="merchant-onboard-api-enum-v15.xsd" />
   
   <xs:element name="approvedMccResponse" type="tns:approvedMccResponse"/>
 
@@ -106,6 +106,7 @@
          </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="pciLevel" type="tns:pciLevelScore" minOccurs="0"/>
 
         <xs:element name="sdkVersion" minOccurs="0">
             <xs:simpleType>
@@ -867,6 +868,7 @@
             </xs:restriction>
           </xs:simpleType>
         </xs:element>
+        <xs:element name="pciLevel" type="tns:pciLevelScore" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -1168,6 +1170,16 @@
                 </xs:sequence>
             </xs:complexType>
         </xs:element>
+        <xs:element name="countryOfOrigin" minOccurs="0">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:minLength value="3" />
+                    <xs:maxLength value="3" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:element>
+        <xs:element name="revenueBoost" type="tns:subMerchantRevenueBoostFeature" minOccurs="0"/>
+        <xs:element name="complianceProducts" type="tns:complianceProducts" minOccurs="0" />
 
         <xs:element name="sdkVersion" minOccurs="0">
             <xs:simpleType>
@@ -1539,6 +1551,16 @@
                 </xs:sequence>
             </xs:complexType>
         </xs:element>
+        <xs:element name="countryOfOrigin" minOccurs="0">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:minLength value="0" />
+                    <xs:maxLength value="3" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:element>
+        <xs:element name="revenueBoost" type="tns:subMerchantRevenueBoostFeature" minOccurs="0"/>
+        <xs:element name="complianceProducts" type="tns:complianceProducts" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
 
@@ -1802,6 +1824,30 @@
                         <xs:maxLength value="100"/>
                     </xs:restriction>
                 </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="subMerchantRevenueBoostFeature" type="tns:subMerchantRevenueBoostFeature"/>
+
+    <xs:complexType name="subMerchantRevenueBoostFeature">
+        <xs:sequence/>
+        <xs:attribute name="enabled" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="complianceProducts">
+        <xs:sequence>
+            <xs:element maxOccurs="2" name="product">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="code" type="tns:complianceProductCode"/>
+                        <xs:element name="name" type="xs:string" minOccurs="0" />
+                        <xs:element name="active" type="xs:boolean"/>
+                        <xs:element name="activationDate" type="xs:date" minOccurs="0"/>
+                        <xs:element name="deActivationDate" type="xs:date" minOccurs="0"/>
+                        <xs:element name="complianceStatus" type="xs:string" minOccurs="0"/>
+                        <xs:element name="complianceStatusDate" type="xs:date" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>

@@ -2,6 +2,7 @@ package io.github.vantiv.mp.sdk.unitTest;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.matches;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 import java.util.Calendar;
@@ -251,8 +252,8 @@ public class TestPayFacLegalEntity {
                 "    <tinValidationStatus>Approved</tinValidationStatus>" +
                 "    <sub_merchant_processing_status>true</sub_merchant_processing_status>" +
                 "</legalEntityRetrievalResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
-        when(mockedCommunication.httpGetRequest(matches(expectedRequestUrl))).thenReturn(mockedResponse);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
+        doReturn(mockedResponse).when(mockedCommunication).httpGetRequest(matches(expectedRequestUrl));
         payFacLegalEntity.setCommunication(mockedCommunication);
         LegalEntityRetrievalResponse response = payFacLegalEntity.getByLegalEntityId(2018);
         assertNotNull(response.getTransactionId());
@@ -300,7 +301,7 @@ public class TestPayFacLegalEntity {
                 "<stakePercent>33</stakePercent>" +
                 "</principal>" +
                 "<yearsInBusiness>12</yearsInBusiness>" +
-                "<sdkVersion>14.0.0</sdkVersion>" +
+                "<sdkVersion>15.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</legalEntityCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
@@ -462,7 +463,7 @@ public class TestPayFacLegalEntity {
                 "    <responseCode>10</responseCode>" +
                 "    <responseDescription>Approved</responseDescription>" +
                 "</legalEntityResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPutRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacLegalEntity.setCommunication(mockedCommunication);
         LegalEntityResponse response = payFacLegalEntity.putByLegalEntity(1000293l,updateRequest);
