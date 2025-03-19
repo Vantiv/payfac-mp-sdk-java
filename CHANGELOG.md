@@ -1,6 +1,10 @@
 CHANGELOG
 ---------
 
+## 15.0.0
+* **Feature** Support for Payfac MP API version 15.0
+
+
 ## 14.0.0
 * **Feature** Support for Payfac MP API version 14.0
 * **Change** Package structure is changed from 'com.mp.sdk' to 'io.github.vantiv.mp.sdk' to support Sonatype repository for publishing artifacts.

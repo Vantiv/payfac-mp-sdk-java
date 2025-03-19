@@ -60,8 +60,8 @@ public class TestPayFacPrincipal {
                 "    <principalId>9</principalId>" +
                 "    <responseDescription>Legal Entity Principal successfully deleted</responseDescription>" +
                 "</principalDeleteResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
-        when(mockedCommunication.httpDeleteRequest(expectedRequestUrl)).thenReturn(mockedResponse);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
+        doReturn(mockedResponse).when(mockedCommunication).httpDeleteRequest(expectedRequestUrl);
         payFacPrincipal.setCommunication(mockedCommunication);
         PrincipalDeleteResponse response = payFacPrincipal.deleteLegalEntityByPrincipalId(2018,9);
         assertNotNull(response.getTransactionId());
@@ -91,7 +91,7 @@ public class TestPayFacPrincipal {
                 "</address>" +
                 "<stakePercent>31</stakePercent>" +
                 "</principal>" +
-                "<sdkVersion>14.0.0</sdkVersion>" +
+                "<sdkVersion>15.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</legalEntityPrincipalCreateRequest>";
         String mockedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
@@ -107,7 +107,7 @@ public class TestPayFacPrincipal {
                 "    <transactionId>2348770070</transactionId>" +
                 "</principalCreateResponse>";
         Communication mockedCommunication = Mockito.spy(Communication.class);
-        when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
+        doReturn(mockedResponse).when(mockedCommunication).httpPostRequest(expectedRequest, expectedRequestUrl);
         payFacPrincipal.setCommunication(mockedCommunication);
         PrincipalCreateResponse response = payFacPrincipal.postByLegalEntityID(2018,principal);
         assertNotNull(response.getTransactionId());

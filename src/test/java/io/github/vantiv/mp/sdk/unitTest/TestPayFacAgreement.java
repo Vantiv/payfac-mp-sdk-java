@@ -61,7 +61,7 @@ public class TestPayFacAgreement {
                 "<manuallyEntered>false</manuallyEntered>" +
                 "<acceptanceDateTime>2014-04-24T11:15:00.000-04:00</acceptanceDateTime>" +
                 "</legalEntityAgreement>" +
-                "<sdkVersion>14.0.0</sdkVersion>" +
+                "<sdkVersion>15.0.0</sdkVersion>" +
                 "<language>java</language>" +
                 "</legalEntityAgreementCreateRequest>";
         String expectedResponse = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
@@ -112,7 +112,7 @@ public class TestPayFacAgreement {
                 "    </legalEntityAgreement>\n" +
                 "  </agreements>\n" +
                 "</legalEntityAgreementRetrievalResponse>\n";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         doReturn(mockedResponse).when(mockedCommunication).httpGetRequest(expectedRequestUrl);
         payFacAgreement.setCommunication(mockedCommunication);
         LegalEntityAgreementRetrievalResponse response = payFacAgreement.getByLegalEntity(201003);
