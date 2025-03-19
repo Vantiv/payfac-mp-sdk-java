@@ -8,9 +8,8 @@ apply plugin : 'jacoco'
 
 
 repositories {
-    maven { url 'http://repo1.maven.org/maven2' }
-    jcenter { url 'http://jcenter.bintray.com/' }
-
+    maven { url "http://nufl2vpnexus02.nonprod.nb01.local:8081/repository/central/"
+        allowInsecureProtocol = true }
 }
 
 
@@ -67,19 +66,38 @@ jar{
 }
 
 
-javadoc{
-    destinationDir = file("$buildDir/${RELEASE_ARTIFACTS_DIR}/doc")
+task javadocJar(type:Jar){
+    getArchiveClassifier().set('javadoc')
+    getDestinationDirectory().set(file("$buildDir/${RELEASE_ARTIFACTS_DIR}/doc"))
 }
 
+task processXsd (type: Copy) {
+    ext.xsdOutput = file("$buildDir/xsd")
 
+    from('src/main/xsd') {
+        include '*.xsd'
+    }
 
-task generateJaxbClasses() {
+    into xsdOutput
+
+    doFirst {
+        xsdOutput.mkdirs()
+    }
+
+    doLast {
+        ant.replaceregexp(file:"$xsdOutput/merchant-onboard-api-v${SCHEMA_VERSION}.xsd", match:"", replace:"")
+        ant.replaceregexp(file:"$xsdOutput/merchant-onboard-api-enum-v${SCHEMA_VERSION}.xsd", match:"", replace:"")
+         }
+}
+
+task generateJaxbClasses(dependsOn: processXsd) {
     compileJava.dependsOn it
     eclipseClasspath.dependsOn it
 
     ext.bindingsFile = "src/main/xsd/bindings.xml"
     ext.generatedDir = "${buildDir}/generated"
 
+    inputs.dir processXsd.xsdOutput
     inputs.file bindingsFile
     outputs.dir generatedDir
 
