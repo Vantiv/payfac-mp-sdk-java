@@ -46,7 +46,9 @@ dependencies {
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-core', version:'2.2.7'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-impl', version:'2.2.5-5'
     generateJAXB group:'com.sun.xml.bind', name:'jaxb-xjc', version:'2.2.5'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
+    generateJAXB group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    testImplementation 'org.mockito:mockito-core:4.11.0'
 }
 
 
@@ -88,7 +90,7 @@ task processXsd (type: Copy) {
     doLast {
         ant.replaceregexp(file:"$xsdOutput/merchant-onboard-api-v${SCHEMA_VERSION}.xsd", match:"", replace:"")
         ant.replaceregexp(file:"$xsdOutput/merchant-onboard-api-enum-v${SCHEMA_VERSION}.xsd", match:"", replace:"")
-         }
+    }
 }
 
 task generateJaxbClasses(dependsOn: processXsd) {
