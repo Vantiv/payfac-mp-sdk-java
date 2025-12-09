@@ -416,7 +416,7 @@ public class TestPayFacLegalEntity {
                 "        <lastName>p_last</lastName>" +
                 "    </principal>" +
                 "</legalEntityCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacLegalEntity.setCommunication(mockedCommunication);
         LegalEntityCreateResponse response = payFacLegalEntity.postByLegalEntity(createRequest);

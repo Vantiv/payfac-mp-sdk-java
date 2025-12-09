@@ -205,7 +205,7 @@ public class TestPayFacSubMerchant {
                 "<merchantIdentString>01100002</merchantIdentString>" +
                 "</originalSubMerchant>" +
                 "</subMerchantCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacSubMerchant.setCommunication(mockedCommunication);
         SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchant(2018,request);
@@ -239,7 +239,7 @@ public class TestPayFacSubMerchant {
                 "<subMerchantId>1100003</subMerchantId>" +
                 "<merchantIdentString>01100003</merchantIdentString>" +
                 "</subMerchantCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacSubMerchant.setCommunication(mockedCommunication);
         SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchantWithDuplicateAll(2018,request);
@@ -300,7 +300,7 @@ public class TestPayFacSubMerchant {
                 "<merchantIdentString>01100002</merchantIdentString>" +
                 "</originalSubMerchant>" +
                 "</subMerchantCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacSubMerchant.setCommunication(mockedCommunication);
         SubMerchantCreateResponse response = payFacSubMerchant.postSubMerchantWithDuplicateNotAll(2018,request);
