@@ -109,7 +109,7 @@ public class TestPayFacPrincipal {
                 "    </principal>" +
                 "    <transactionId>2348770070</transactionId>" +
                 "</principalCreateResponse>";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
         when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(mockedResponse);
         payFacPrincipal.setCommunication(mockedCommunication);
         PrincipalCreateResponse response = payFacPrincipal.postByLegalEntityID(2018,principal);

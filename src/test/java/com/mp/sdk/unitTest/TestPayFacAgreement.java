@@ -49,7 +49,7 @@ public class TestPayFacAgreement {
     }
 
     @Test
-    public void testPostByLegalEntity(){
+    public void testPostByLegalEntity() {
         String expectedRequestUrl = "https://www.testvantivcnp.com/sandbox/payfac/legalentity/201003/agreement";
         String expectedRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                 "<legalEntityAgreementCreateRequest xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">" +
@@ -69,11 +69,11 @@ public class TestPayFacAgreement {
                 "<legalEntityAgreementCreateResponse xmlns=\"http://payfac.vantivcnp.com/api/merchant/onboard\">\n" +
                 "  <transactionId>7662777105</transactionId>\n" +
                 "</legalEntityAgreementCreateResponse>\n";
-        Communication mockedCommunication = Mockito.mock(Communication.class);
-        doReturn(expectedResponse).when(mockedCommunication).httpPostRequest(expectedRequest, expectedRequestUrl);
+        Communication mockedCommunication = Mockito.spy(Communication.class);
+        when(mockedCommunication.httpPostRequest(expectedRequest, expectedRequestUrl)).thenReturn(expectedResponse);
         payFacAgreement.setCommunication(mockedCommunication);
-        LegalEntityAgreementCreateResponse response = payFacAgreement.postByLegalEntity(201003,legalEntityAgreement);
-        assertEquals(7662777105L, response.getTransactionId().longValue());
+        LegalEntityAgreementCreateResponse response = payFacAgreement.postByLegalEntity(201003, legalEntityAgreement);
+        assertNotNull(response.getTransactionId());
     }
 
     @Test

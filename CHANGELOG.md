@@ -1,6 +1,9 @@
 CHANGELOG
 ---------
 
+## 13.1.1
+* **Feature** Support for Merchant Category Code - Payfac MP API version 13.1.1
+
 ## 13.1.0
 * **Feature** Support for Payfac MP API version 13.1
 
