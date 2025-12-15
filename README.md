@@ -54,9 +54,9 @@ List of configuration parameters along with their values can be found [here](htt
 
 ```java
 import com.mp.sdk.ApprovedMccResponse;
-import com.mp.sdk.Communication;
-import com.mp.sdk.Configuration;
-import com.mp.sdk.PayFacMcc;
+import io.github.vantiv.mp.sdk.Communication;
+import io.github.vantiv.mp.sdk.Configuration;
+import io.github.vantiv.mp.sdk.PayFacMcc;
 
 public class SamplePayFacRequest {
 
